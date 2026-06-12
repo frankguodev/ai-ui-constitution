@@ -66,7 +66,7 @@ Use presets only when the user explicitly chooses one. When no preset is specifi
 Plan structure before styling. Do not start from backgrounds, gradients, cards, or motion.
 
 - First viewport: what it is, who it is for, and what to do next.
-- Body: each section expresses one core idea.
+- Body: each section expresses one core idea, with headings, copy, media, and actions arranged into a scannable pause.
 - Action path: primary CTA, secondary CTA, contact/buy/sign-up/continue-reading path.
 - Trust: only real cases, work, feature explanation, FAQ, or data explanation.
 - State boundaries: loading, empty, error, success, disabled, long content, missing images.
@@ -95,6 +95,8 @@ Cover relevant states for buttons, forms, lists/data, dialogs/menus, and navigat
 
 Consider at least 375px, 768px, and 1280px. Avoid horizontal scrolling, edge-touching text, small buttons, overflowing copy, overflowing media/tables/code blocks, sticky/fixed overlap, and desktop layouts merely shrinking on mobile. Use `max-width`, `min-width: 0`, `aspect-ratio`, wrapping, and sensible breakpoints for fixed-format elements.
 
+Control page density and breathing room: section spacing, container width, line length, card density, and CTA weight should help scanning instead of crowding equal-weight elements into one viewport. Dashboard / Admin pages may be denser, but still need clear grouping; Landing / Portfolio / Content pages need stronger vertical rhythm.
+
 Build for realistic content variation: longer titles, longer button copy, mixed language, varied image ratios, uneven card content, lists of 0/1/3/10/20 items, longer errors, and very long names, emails, project names, or filenames. Do not build layouts that only fit ideal short copy.
 
 Check for AI-template smell: excessive badges, bento grids, gradient blobs, vague slogans, fake data, meaningless icons, repeated CTAs, and filler cards. Replace decoration stacking with real content and clear structure.
@@ -105,7 +107,7 @@ After building, self-check and fix obvious issues:
 
 1. Critical issues: unreadable, unclickable, overflow, overlap, broken nav/form/dialog.
 2. Fit with the existing visual system, reference role, or selected preset.
-3. Spacing, typography, color, radius, border, shadow, and component states.
+3. Section rhythm, spacing, typography, color, radius, border, shadow, and component states.
 4. Mobile, long content, and realistic content pressure.
 5. Obvious AI-template smell or invented facts.
 
@@ -190,6 +192,7 @@ Before output, confirm temporary verification files created during build were de
 - Do not invent real customers, prices, metrics, cases, teams, awards, or business promises.
 - Do not generate pages that only fit ideal short copy.
 - Do not make static pretty screenshots while ignoring states, responsive behavior, entry paths, and content pressure.
+- Do not fill the page just to make it feel rich if sections lose pause, hierarchy, or scannability.
 - Do not add meaningless cards, badges, icons, gradients, or motion just to fill the page.
 - Do not expand a simple page into backend, auth, database, and complex state management.
 - Do not fabricate lint, build, browser, or screenshot verification results.

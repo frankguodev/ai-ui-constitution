@@ -4,14 +4,30 @@
 
 ---
 
-## v0.1.25 - 2026-05-25
+## v0.1.25 - 2026-05-27
 
-### 架构
+### Build
 
-- 将 npm 安装器从单一 `webcraft-ui` 硬编码调整为 skills collection 安装器，可自动发现 `skills/*/SKILL.md`，并支持 `--skill <name|all>` 和 `list`。
-- README 和 README_zh_CN 增加标准 `npx skills add frankguodev/webcraft-skills --skill webcraft-ui` 安装入口，同时保留自带安装器用于安装 Claude Code slash command prompts。
-- package 描述调整为 Webcraft skills collection，并将版本更新为 `0.1.25`。
-- validate 增加 skills collection 目录校验，确保未来新增 skill 时 `SKILL.md` frontmatter 名称与目录一致。
+- 将页面呼吸感融入 `build-ui` 的信息结构、质量底线和自检规则，要求 section 节奏、容器宽度、卡片密度、段落行长和 CTA 权重共同服务扫描路径。
+- 补充不同页面类型的密度判断：Dashboard / Admin 可以更紧凑，但仍需清楚分组；Landing / Portfolio / Content 页面应保留更明显的纵向节奏。
+- 增加禁止项，避免为了“内容丰富”把页面填满，导致 section 无停顿、主次不清或用户难以快速扫描。
+
+### Polish
+
+- 将“呼吸感不足”并入 `polish-ui` 的 spacing / rhythm 诊断、润色优先级、分项策略和复检规则。
+- 强化润色时对页面扫描路径、section 停顿、主 CTA 可见性、分组关系和移动端密度的检查。
+- 增加禁止项，避免只靠压缩间距、缩小字号或塞满卡片制造表面整齐，从而破坏可读性和页面层次。
+- 强化 `polish-ui` 对页面类型、构图轴线和呼吸感过量的判断，避免搜索 / 词典 / 资源索引页被润色成松散 landing。
+- 补充搜索 / 列表信息页的中心轴规则，要求标题、说明、搜索栏、热门标签和后续内容容器共享稳定对齐逻辑。
+- 将过度拉开 section、稀释内容密度和首屏内容下沉列为失败信号，避免用大留白制造伪高级感。
+- 精简 `polish-ui` workflow，将 Audit / Fix 衔接、模式、复检和输出模板压缩进更短的执行路径，降低规则读取成本。
+- 增加参考驱动润色规则：允许借鉴参考页的布局骨架、模块职责、元素种类、密度关系和图标语义，但禁止复制参考站品牌、文案、数据和业务承诺。
+- 强化内容结构判断，要求识别重复 section、连续卡片网格、卡片面积与信息量不匹配以及图标语义重复等产品感问题。
+- 将 `polish-ui` 的 Light / Standard / Deep 调整为内部执行深度，对外只暴露 `polish`，由 Agent 根据目标、风险和范围自行匹配。
+- 强化参考驱动 polish 的防叠加约束：先盘点现有模块与可迁移参考模块，默认先合并再新增，避免把参考结构直接叠到现有页面上。
+- 增加目录 / 搜索 / 词条 / 资源索引页的卡片密度规则，短内容入口优先使用紧凑列表、小入口卡、分组入口或降低视觉权重。
+- 增加 polish 后的模块职责复盘，要求每个 section 回答清楚问题，避免多个 section 用相同形态回答同一入口问题。
+- 调整 `polish-ui` 验证边界：默认不主动启动浏览器、不保存截图，只有用户明确要求浏览器验证、before / after 截图、多视口检查或已实测交付时才执行。
 
 ## v0.1.24 - 2026-05-25
 

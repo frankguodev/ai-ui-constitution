@@ -1,18 +1,17 @@
 # UI Polish Workflow
 
-Use this workflow to make existing UI more refined, realistic, and less AI-generated while preserving product meaning, information structure, technical stack, and visual direction.
-
-Polish is restrained refinement, not redesign. By default, do not change style direction, apply a preset, or rewrite product expression.
+Use this workflow to make existing UI more refined, realistic, and less AI-generated while preserving product meaning, information structure, technical stack, and visual direction. Polish is restrained refinement, not redesign.
 
 ## Locale Rule
 
-The skill's Locale Contract has already selected one runtime locale before this workflow is read. Stay in this locale. Do not open the paired `.zh.md` or English workflow/checklist/module files unless the user explicitly asks for translation, bilingual comparison, localization, or locale consistency.
+The skill's Locale Contract has already selected one runtime locale before this workflow is read. Stay in that locale; do not open the paired locale file unless the user explicitly asks for translation, bilingual comparison, localization, or locale consistency.
 
-## 1. Diagnose First
+## 1. Diagnose
 
-Before editing, identify the main source of roughness:
+Before editing, identify the main source of roughness. Do not tweak everywhere without diagnosis:
 
-- Spacing: cramped/empty rhythm, uncontrolled width, unstable padding.
+- Page type / composition: page type and composition goal do not match, such as a search / glossary / resource index being treated like a loose landing page, or headings, search, and content sections lacking a stable shared axis.
+- Spacing / rhythm: spacing is cramped or hollow, sections lack pauses, or breathing room disconnects related modules and pushes core first-screen content down.
 - Typography: disordered scale, tight line-height, awkward heading wraps.
 - Color: weak hierarchy, overused accents, insufficient contrast.
 - Radius / border / shadow: no consistent system.
@@ -20,176 +19,80 @@ Before editing, identify the main source of roughness:
 - Responsive: mobile crowding, overflow, small buttons, unstable media ratio.
 - Template smell: vague copy, too many badges, decoration over information.
 
-Find the main problem first. Do not tweak everywhere without diagnosis.
+If roughness mainly comes from composition or a page-type mismatch, make the layout relationships work before local token polish.
 
 ## 2. Boundary
 
-`polish-ui` fits:
+Use polish when the page is basically usable but rough, unstable, or not realistic enough; spacing, typography, color, radius, border, shadow, states, or template noise need convergence; or the user asks for more refinement, less AI-looking output, detail cleanup, less crowding, or better breathing room.
 
-- The page is basically usable but rough, unstable, or not realistic enough.
-- Spacing, typography, color, radius, border, shadow, states, or template noise need convergence.
-- The user says "make it more polished", "less AI-looking", "refine details", or "make it better without big changes".
-- Audit has confirmed that the main issues are not blocking use, and remaining work is mostly Minor polish, visual-system convergence, state completion, or AI-template smell.
+Do not use polish when the core flow is unusable, severe overflow/overlap exists, controls are unclickable, dialogs cannot close, or forms cannot submit; or when information architecture, product positioning, core copy, conversion path, cross-page component systems, or visual direction need to be rebuilt.
 
-`polish-ui` does not fit:
+Review / audit findings are diagnostic clues only; before acting, confirm they still fit polish scope and will not change information structure or repeat existing page content. Critical, blocking Major, or core-task issues go to `fix-ui`; cross-page systemic issues go to `audit-ui`. If the user only says "make it more polished" and risk is unclear, diagnose lightly first. When the user provides a reference site, screenshot, or design direction, first inventory existing modules and transferable reference modules, then decide whether to replace, merge, weaken, delete, or add a little; merge before adding by default. Borrow layout skeleton, section roles, element types, density relationships, icon semantics, and interaction entry points only; do not copy the reference site's brand visuals, copy, data, metrics, logo, or business claims. Stop and provide a plan when factual content, product positioning, or information architecture would need to change.
 
-- Core flow is unusable, severe overflow/overlap exists, controls are unclickable, dialogs cannot close, or forms cannot submit.
-- Product positioning, information architecture, core copy, or visual direction needs to be rebuilt.
-- Cross-page component systems are severely broken and need systemic audit / fix.
-- The user explicitly asks for a new design.
+## 3. Preserve And Converge
 
-Blocking issues go to `fix-ui`; systemic issues go to `audit-ui`; direction rebuilds should be explained as redesign work.
+Preserve product meaning, business logic, information structure, main content order, user-provided real copy/data/pricing/cases/brand information, existing tech stack, component library, routes, state logic, brand direction, page tone, and visual system.
 
-## 3. Audit / Fix Handoff
+Converge with existing tokens; do not create a second color, radius, shadow, or spacing system for polish. Prefer local fixes over component refactors, remove noise instead of adding decoration, and unify component states instead of adding new visual effects.
 
-- Source is audit findings: handle only visual maturity, template noise, state details, non-blocking responsive issues, and high-value Minor items; Critical and blocking Major findings go to `fix-ui` first.
-- Source is `Focused Audit`: prioritize Top Findings related to visual system, AI-template smell, control consistency, and risk viewports. Do not expand into Deep Polish.
-- Source is `Deep Audit`: follow polish items after usability fixes in Fix Order; do not rerun a full audit.
-- Findings from review / audit are only diagnostic clues for polish; before acting, confirm they still fit the current polish scope and will not change information structure or repeat content already present on the page.
-- User only says "make it more polished" and risk is unclear: do a light diagnosis first; suggest audit when systemic risk appears.
+Polish does not add page-level information modules, data overviews, leaderboards, maps, recommendation areas, or content collections by default; stop and state that the work is beyond polish when those are needed. Lightly adjust vague, repeated, or visibly templated copy only when product meaning stays intact; put risky content changes under `Open Questions`.
 
-## 4. Preserve And Converge
+## 4. Execution Depth
 
-Preserve by default:
+Externally expose only `polish`. Do not ask the user to choose Light / Standard / Deep; choose execution depth from the user's goal, page risk, and change scope.
 
-- Product meaning, business logic, information structure, and main content order.
-- User-provided real copy, data, pricing, cases, and brand information.
-- Existing tech stack, component library, routes, and state logic.
-- Existing brand direction, page tone, and visual system.
+- Light: one region, one component, or a few same-type components; only adjust spacing, alignment, local radius, border, hover/focus states.
+- Standard: default depth for one page, one main flow, or a tightly related component group; converge local visual tokens, typography, section rhythm, component states, and responsive details.
+- Deep: for a broadly rough page that does not need redesign; allows page-level convergence of spacing, type hierarchy, color hierarchy, radius, border, shadow, shared states, and presentation structure. Stop and provide a plan or handoff when information architecture, positioning, cross-page systems, routes, dependencies, or UI library replacement appear.
 
-Converge first:
+## 5. Priority
 
-- Use existing tokens; do not create a second color, radius, shadow, or spacing system for polish.
-- Prefer local fixes over component refactors; remove noise instead of adding decoration.
-- Polish does not add page-level information modules, data overviews, leaderboards, maps, recommendation areas, or content collections by default; when those are needed, stop and state that the work is beyond polish.
-- Converge color, type scale, radius, border, shadow, and spacing.
-- Unify component states instead of adding new visual effects.
-
-Lightly adjust vague, repeated, or visibly templated copy only when product meaning stays intact. Put risky content changes under `Open Questions`.
-
-## 5. Polish Modes
-
-### Light Polish
-
-- Scope is usually one page region, one component, or a few same-type components.
-- Adjust spacing, alignment, local radius, border, hover/focus states.
-- Do not change information structure, color palette, or large components.
-
-### Standard Polish
-
-- Default mode, usually for one page, one main flow, or a tightly related component group.
-- Converge local visual tokens, improve typography, section rhythm, component states, and responsive details.
-- Remove obvious template noise and lightly adjust copy without changing product meaning.
-
-### Deep Polish
-
-- For a broadly rough page that does not need redesign.
-- Allows page-level convergence of spacing, type hierarchy, color hierarchy, radius, border, shadow, and shared states.
-- Do not refactor the site-wide component system; cross-page systemic issues should be audited first.
-
-Stop Deep Polish and provide a plan or handoff when:
-
-- Information architecture, product positioning, core copy, or the main conversion path needs to change.
-- Cross-page component systems, token systems, or route structure need refactoring.
-- Scope grows beyond the current page or flow boundary.
-- A new dependency, UI library replacement, or tech-stack change is needed.
-
-## 6. Polish Priority
-
-1. Usability boundary: blocking issues go to `fix-ui`; polish handles only non-blocking states and details.
+1. Usability boundary: blocking issues go to `fix-ui`.
 2. Responsive details: mobile wrapping, button height, media ratio, sticky overlap, dialog scroll.
-3. Information hierarchy: first-screen priority, heading/body rhythm, CTA hierarchy.
+3. Information hierarchy: page type, first-screen priority, composition axis, section breathing room, heading/body rhythm, CTA hierarchy.
 4. Visual tokens: spacing, font scale, color, radius, border, shadow.
 5. AI Template Smell: excessive badges, bento grids, gradient glows, vague slogans, decorative icons.
 6. Microinteraction: cursor / pointer, hover, active, focus-visible, transition, icon/text alignment, and hit targets.
 
-Do not start with motion or decoration. Refinement usually comes from clearer hierarchy and a steadier system.
+## 6. Strategies
 
-## 7. Strategies
-
-- Spacing: normalize page container, section spacing, and component padding first; reduce mobile spacing without edge crowding.
+- Spacing: normalize page container, section spacing, grouping, and component padding first; check both "too cramped" and "too empty" so breathing room does not disconnect related modules, push core first-screen content down, or reduce list scanning efficiency. Reduce mobile spacing without edge crowding or directly compressing desktop density onto small screens.
+- Composition: choose the composition goal from the page type. Search, glossary, and resource-index pages with a large search field usually need a centered first-screen axis where title, supporting copy, search field, popular chips, and following content container share a clear alignment logic; centering is not mechanical, so also check visual weight, width, whitespace, and next-section visibility. Admin, dashboard, and dense list pages can keep a left axis, but need enough content density and clear grouping to support it.
+- Content Structure: check whether sections repeat the same role, same card grid, or cards whose area exceeds their information. Same-type content should have one primary expression; repeated appearances must carry different roles, weight, or form, otherwise merge, weaken, or delete first. Directory / search / glossary / resource-index pages should not default short entries to large-padding, tall cards; when a card only has a title, one-line description, and one status, use compact lists, small entry cards, grouped entries, trending lists, or lower visual weight. Without changing product facts, repeated modules may be reorganized into category entries, trending lists, scenario entries, compact update lists, complete lists, or methodology notes so the page forms a product path instead of a card pile.
 - Typography: reduce levels, control type/weight jumps, improve line-height, paragraph width, and heading wraps.
 - Color: preserve brand color, limit accent usage, and make contrast/state recognition work first.
 - Radius / Border / Shadow: converge a small token scale; borders structure, shadows show real elevation.
 - Components / States: add cursor / pointer, hover, active, focus-visible, disabled, loading, empty, error, and success for truly clickable elements; state feedback should not change element size, adjacent layout, or scroll position.
-- Icons / Click targets: align icon size, stroke width, text baseline, and icon/text spacing; icon buttons and adjacent actions need clear click / touch targets, not only small visual icons.
+- Icons / Click targets: align icon size, stroke width, text baseline, and icon/text spacing; icons must support category, state, or action recognition, and repeated same-icon usage should mean the same thing; icon buttons and adjacent actions need clear click / touch targets.
 - AI Template Smell: first delete, weaken, or converge meaningless badges, decorative icons, repeated CTAs, and filler cards; add only small supporting content when it does not repeat information already present on the page and serves the current task.
+When boundaries are unclear, reference only needed modules: `layout`, `visual-system`, `components-states`, `responsive`, `forms-controls`, and `ai-template-smell`. If module judgment shows core task, accessibility, or data-operation risk, stop polish and move to `fix-ui` or `audit-ui`.
 
-If token drift has spread across pages, stop page-level polish and suggest audit or design-system cleanup first.
-
-## 8. Reference Audit Modules
-
-Polish does not need to read the full audit checklist. Reference only what is needed:
-
-- `visual-system`: tokens, icons, media, and visual-system convergence.
-- `components-states`: state completion.
-- `ai-template-smell`: template noise.
-- `responsive`: light viewport polish, wrapping, button height, media ratio, and non-blocking overflow.
-- `forms-controls`: inputs, selects, dropdowns, multiselects, menus, and form states that affect consistency but do not block the flow.
-
-If module judgment shows the issue affects core task completion, accessibility, or data operations, stop polish and move to `fix-ui` or `audit-ui`.
-
-## 9. Recheck
+## 7. Recheck
 
 After polishing, check:
 
-- 375px, 768px, 1280px key viewports.
-- Long headings, long button copy, mixed Chinese/English, long labels, badges, chips, and error text.
+- 375px, 768px, 1280px key viewports, plus long headings, long button copy, mixed Chinese/English, long labels, badges, chips, and error text.
 - Cursor / pointer, hover, active, focus-visible, disabled, loading, and error states for truly clickable elements.
-- Icon/text alignment, consistent icon stroke and size, and sufficient icon-button hit targets.
-- Dialogs, menus, forms, and navigation still work.
+- Icon/text alignment, icon stroke and size, icon-button hit targets, and whether dialogs, menus, forms, and navigation still work.
 - Visual tokens are more unified and no new inconsistency was introduced.
-- Original page style and product meaning are preserved.
-- Information duplication: confirm existing lists, stats, categories, tags, or CTAs were not copied into a new decorative or summary area.
+- The page is easier to scan, sections pause without feeling hollow, and the main CTA is not buried by equal-weight elements.
+- First-screen title, supporting copy, search area, chip group, card group, or next section stay within one composition logic; for search / list information pages, especially check the center axis, container width, and first-screen content visibility.
+- Each section answers one clear question, serves one clear entry, or supports one decision; two sections should not use the same form to answer the same entry question.
+- Original page style and product meaning are preserved, and existing lists, stats, categories, tags, or CTAs were not copied into a new decorative or summary area.
 
-When the page can run and the environment allows it, open the target page for a light recheck:
+Polish does not start a browser or save screenshots by default. Prefer diff review, code review, type checks, or existing context for rechecks, and state any residual risk from not doing browser verification. Open the page or save screenshots only when the user explicitly asks for browser verification, before/after screenshots, multi-viewport checks, or a verified delivery; saved screenshots go under `examples/reports/assets/polish/<polish-run>/`. If the polish changes broad layout, responsiveness, interaction paths, or reference-guided structure and the user did not request verification, state `Not verified in browser` and, when useful, suggest follow-up `audit-ui` or `fix-ui` verification.
 
-- Align with the user's actual entry: start command, URL / port, route, auth state, and main state.
-- If this polish run starts a temporary dev / preview / static server, record command, URL / port, and process information; shut it down after recheck and check whether the target port is still occupied. If reusing a user-started service, record it but do not shut it down.
-- On Windows, npm, Next.js, Vite, Storybook, and similar multi-process launch paths, do not rely only on the parent PID returned at startup; if remaining port ownership cannot be confirmed as this polish run's service, do not shut it down and state that in `Temporary service`.
-- If screenshots are generated, prefer saving them under `examples/reports/assets/polish/` with one subdirectory per run; keep `before` / `after` screenshots in the same directory, and include page/region, viewport, and phase in filenames, such as `home-375-before.png` and `home-375-after.png`.
-- Temporary comparison files, visual drafts, one-off screenshots, verification scripts, or temporary data should be deleted before output by default; retain them only when the user asks or when they are evidence artifacts, then place them under `examples/reports/assets/polish/<polish-run>/` and state them in `Screenshots` or `Temporary service`.
-- If browser opening, service startup, or screenshot saving is unavailable, state why and list remaining risk.
+## 8. Output
 
-## 10. Output Format
+Output `Source`, `Boundary`, `Preserved`, `Adjusted`, `Removed`, `Changed Files`, `Verification`, and `Remaining Questions`. State which visual details were converged, what template noise was removed, whether the original style was preserved, and what was not verified.
 
-```markdown
-## Polish Summary
-- Source:
-- Boundary:
-- Preserved:
-- Adjusted:
-- Removed:
-
-## Before / After
-- Before:
-- After:
-
-## Changed Files
-- `path/to/file`
-
-## Verification
-- Checked:
-- Not verified:
-- Screenshots:
-- Temporary service:
-
-## Remaining Questions
-- ...
-```
-
-State exactly which visual details were converged, what template noise was removed, and whether the original style was preserved.
-
-Before output, confirm temporary files created during polish were deleted. Retained files must be user-requested, evidence artifacts, or real project changes, and their paths must be listed in the output.
-
-## 11. Prohibited
+## 9. Prohibited
 
 - Do not turn polish into redesign or force a preset when the user did not choose one.
-- Do not default to dark, cinematic, minimal, or SaaS style.
 - Do not add gradients, blobs, cards, or motion to create "premium" feel.
 - Do not delete real business information, rewrite positioning, or rewrite core copy unless requested.
+- Do not treat a reference site as a visual skin to copy, or copy its brand, copy, data, metrics, logo, or business claims.
 - Do not add dependencies, change component library, rewrite routes, or change business logic.
 - Do not hide overflow, clip content, make text unreadable, or delete necessary information to create fake polish.
-- Do not fabricate browser verification.
-- Do not leave a dev / preview / static server started only for verification running in the background and occupying a port, unless the user explicitly asked to keep it running.
-- Do not shut down a service that existed before polish or cannot be confirmed as owned by this polish run.
+- Do not create "neatness" only by compressing spacing, shrinking type, or filling the page with cards; do not create "premium" feel only by enlarging section padding, pulling modules apart, or diluting content density.
+- Do not start a browser, save screenshots, or manage local services for polish unless the user asked for it.

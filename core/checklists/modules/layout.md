@@ -12,6 +12,8 @@ Use this module to strengthen the layout checks in `ui-audit.md`. The goal is no
 
 - First-viewport relationships: title, supporting copy, primary action, visual container, search area, chip group, and next section should have clear priority.
 - Region boundaries: hero, search, chips, and content sections should not overlap, disconnect, misalign, float, or feel hollow.
+- Composition axis: identify whether the first viewport uses a center axis, left axis, split axis, or visual-object axis; title, supporting copy, search field, chip group, and following content container should share one alignment logic, or the design should have enough visual weight to justify different alignments.
+- Search / list information pages: glossary, resource-index, knowledge-base, and search pages with a large search field usually should make title, supporting copy, and search bar form a stable centered entry, with following content using the same container rhythm instead of suddenly drifting left, floating, or being separated by excessive whitespace.
 - Visual containers: mockups, illustrations, charts, screenshots, or decorative containers should contain enough meaningful content for their occupied space.
 - Alignment system: container width, horizontal padding, section spacing, and grid/flex gaps should follow one rhythm.
 - Layering: sticky, fixed, absolute, z-index, overlays, toasts, and dropdowns should not hide core text or actions.
@@ -33,6 +35,8 @@ Use this module to strengthen the layout checks in `ui-audit.md`. The goal is no
 
 - A large visual area contains very little content and looks like a placeholder or failed asset.
 - Search, chips, or the next heading crowd the hero and create an unnatural reading order.
+- Title and search field clearly try to form a centered entry, but chips, card groups, or the next section suddenly use another width / alignment, making the page feel biased, scattered, or uneven.
+- Breathing room is created by pulling the first viewport and content area too far apart, leaving a list information page hollow, pushing core content down, or breaking the scan path.
 - Background grids, images, or decorative layers do not align with the content layer, making a framed area feel empty.
 - Desktop left/right composition seems balanced, but mobile or tablet causes one region to drift, overlap, or disconnect.
 

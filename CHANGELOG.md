@@ -4,14 +4,25 @@ English | [中文](./CHANGELOG_zh_CN.md)
 
 ---
 
-## v0.1.25 - 2026-05-25
+## v0.1.25 - 2026-05-27
 
-### Architecture
+### Build
 
-- Changed the npm installer from a hardcoded single-`webcraft-ui` installer into a skills-collection installer that discovers `skills/*/SKILL.md` and supports `--skill <name|all>` plus `list`.
-- Added the standard `npx skills add frankguodev/webcraft-skills --skill webcraft-ui` install path to README and README_zh_CN while keeping the package installer for Claude Code slash command prompts.
-- Updated the package description to present Webcraft as a skills collection and bumped the version to `0.1.25`.
-- Added skills-collection validation so future skills must have a `SKILL.md` frontmatter name that matches the skill directory.
+- Integrated page breathing room into `build-ui` information structure, quality baselines, and self-check rules so section rhythm, container width, card density, paragraph line length, and CTA weight support scanning paths together.
+- Added density guidance by page type: Dashboard / Admin screens can stay tighter with clear grouping, while Landing / Portfolio / Content pages should preserve stronger vertical rhythm.
+- Added a prohibition against filling pages only to make them feel "richer" when it removes section pauses, weakens hierarchy, or makes scanning harder.
+
+### Polish
+
+- Strengthened `polish-ui` spacing and rhythm judgment in both directions: insufficient breathing room and excessive whitespace are now both treated as polish risks when they harm scan paths, content density, or first-screen balance.
+- Added page-type and composition-axis guidance, especially for search / glossary / resource-index pages that need a stable centered entry across title, supporting copy, search field, popular chips, and following content.
+- Compressed the `polish-ui` workflow by folding Audit / Fix handoff, execution depth, recheck, and output guidance into a shorter execution path.
+- Added reference-guided polish rules: borrow layout skeletons, section roles, element types, density relationships, and icon semantics from references, but do not copy reference branding, copy, data, metrics, logos, or business claims.
+- Strengthened content-structure checks for repeated sections, repeated card grids, card area that exceeds information value, repeated icon semantics, and directory / search / glossary / resource-index density.
+- Changed Light / Standard / Deep Polish into internal execution depth; externally `polish` remains the only user-facing workflow and the agent chooses depth from goal, risk, and scope.
+- Added anti-stacking rules for reference-guided polish: inventory existing modules and transferable reference modules first, then merge, replace, weaken, delete, or add sparingly, with merge-before-add as the default.
+- Added post-polish section-role review so each section answers a clear question and multiple sections do not use the same form to answer the same entry problem.
+- Changed `polish-ui` verification boundaries: polish does not start browsers or save screenshots by default, and only does so when the user explicitly asks for browser verification, before / after screenshots, multi-viewport checks, or verified delivery.
 
 ## v0.1.24 - 2026-05-25
 
