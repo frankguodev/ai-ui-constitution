@@ -2,7 +2,7 @@
 
 English | [中文](./README_zh_CN.md)
 
-Web UI skill pack for Codex and Claude Code, focused on reviewing, fixing, polishing, and building more mature web UI.
+Webcraft skills collection for Codex and Claude Code, currently focused on reviewing, fixing, polishing, and building more mature web UI.
 
 AI coding tools can generate code quickly, but their UI often feels too crowded, flashy, inconsistent, or obviously AI-generated.
 
@@ -32,11 +32,11 @@ When asking for help, try to name three things:
 
 # What Is This?
 
-Webcraft Skills is a UI quality system for AI agents.
+Webcraft Skills is a skills collection for AI agents. Its first stable skill is the web UI quality system `webcraft-ui`.
 
 It is not a UI framework, design system, component library, or visual site builder.
 
-The current core scope covers five workflows: **Audit, Review, Fix, Polish, and Build**. The installable skill is `webcraft-ui`; the npm package is `webcraft-skills`.
+The `webcraft-ui` core scope covers five workflows: **Audit, Review, Fix, Polish, and Build**. The current installable skill is `webcraft-ui`; the npm package is `webcraft-skills`.
 
 The broader goal is:
 
@@ -85,7 +85,17 @@ See the full report in [`examples/reports/self-audit-rough-ui-report.md`](./exam
 
 ## Current Recommended Install
 
-Install the skill with npx:
+Standard skill-ecosystem install:
+
+```bash
+npx skills add frankguodev/webcraft-skills --skill webcraft-ui
+```
+
+This installs the `webcraft-ui` skill directory, including `SKILL.md` and the audit / review / fix / polish / build workflows under `references/`. After installing, invoke it with natural language, `/skills`, or `$webcraft-ui`.
+
+If you use Claude Code and want `/ui-audit`, `/ui-review`, `/ui-fix`, `/ui-polish`, `/ui-build`, and related slash command prompts installed too, use this package's full installer.
+
+Install for Codex:
 
 ```bash
 npx webcraft-skills install --agent codex
@@ -103,6 +113,18 @@ To install for both:
 npx webcraft-skills install --agent all
 ```
 
+Install only one skill:
+
+```bash
+npx webcraft-skills install --agent codex --skill webcraft-ui
+```
+
+List skills included in the npm package:
+
+```bash
+npx webcraft-skills list
+```
+
 For Codex, this installs:
 
 ```text
@@ -118,6 +140,8 @@ For Claude Code, it installs:
 ~/.claude/skills/webcraft-ui
 ~/.claude/commands/*.md
 ```
+
+This repository is organized as a skills collection. Future skills should live under `skills/<skill-name>/SKILL.md`. `npx skills add` is the general installation entry; `npx webcraft-skills install` additionally installs the Claude Code command prompts maintained by this project.
 
 ## Invocation
 
@@ -393,6 +417,9 @@ Optional:
 
 **Installed, but the skill is not visible?**  
 Check that the install target matches your client. Codex usually reads `~/.agents/skills/webcraft-ui` and `~/.codex/skills/webcraft-ui`; Claude Code usually reads `~/.claude/skills/webcraft-ui` and `~/.claude/commands/`.
+
+**What is the difference between `npx skills add` and `npx webcraft-skills install`?**  
+`npx skills add frankguodev/webcraft-skills --skill webcraft-ui` is the standard skill-ecosystem install and installs the `webcraft-ui` skill itself. `npx webcraft-skills install --agent claude` is this project's full installer and also installs Claude Code slash command prompts.
 
 **Audit or Review?**  
 Use `audit` for whole pages, whole sites, pre-launch checks, or multi-viewport inspection. Use `review` for PRs, diffs, screenshots, single components, or named page areas.

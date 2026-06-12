@@ -1,7 +1,7 @@
 {
   "name": "webcraft-skills",
-  "version": "0.1.24",
-  "description": "Webcraft skill pack for auditing and fixing rough AI-generated websites.",
+  "version": "0.1.25",
+  "description": "Webcraft skills collection for reviewing, fixing, polishing, and building mature web UI.",
   "license": "MIT",
   "type": "module",
   "bin": {

@@ -14,15 +14,40 @@ const usage = `Usage:
   npx webcraft-skills install --agent codex
   npx webcraft-skills install --agent claude
   npx webcraft-skills install --agent all
+  npx webcraft-skills install --agent codex --skill webcraft-ui
+  npx webcraft-skills list
 
 Options:
   --agent <codex|claude|all>  Target agent. Default: codex.
+  --skill <name|all>          Skill to install. Default: all.
   --copy                     Copy files. This installer always copies.
   -y, --yes                  Non-interactive. This installer is non-interactive.
 `;
 
 if (command === "help" || args.includes("--help") || args.includes("-h")) {
   console.log(usage);
+  process.exit(0);
+}
+
+function discoverSkills() {
+  const skillsRoot = join(root, "skills");
+  if (!existsSync(skillsRoot)) return [];
+
+  return readdirSync(skillsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((name) => existsSync(join(skillsRoot, name, "SKILL.md")))
+    .sort();
+}
+
+const availableSkills = discoverSkills();
+
+if (command === "list") {
+  if (availableSkills.length === 0) {
+    console.log("No skills found.");
+  } else {
+    console.log(availableSkills.join("\n"));
+  }
   process.exit(0);
 }
 
@@ -38,20 +63,34 @@ function getOption(name, fallback) {
 }
 
 const agent = getOption("--agent", "codex").toLowerCase();
+const skillOption = getOption("--skill", "all");
 const targets =
   agent === "all" || agent === "*"
     ? ["codex", "claude"]
     : [agent];
 
-const skillName = "webcraft-ui";
-const legacySkillNames = ["webcraft-skills"];
-const skillSource = join(root, "skills", skillName);
 const commandSource = join(root, "commands");
 
-if (!existsSync(skillSource)) {
-  console.error(`Skill source not found: ${skillSource}`);
+if (availableSkills.length === 0) {
+  console.error("No installable skills found under skills/*/SKILL.md");
   process.exit(1);
 }
+
+const selectedSkills =
+  skillOption === "all" || skillOption === "*"
+    ? availableSkills
+    : skillOption.split(",").map((name) => name.trim()).filter(Boolean);
+
+for (const skillName of selectedSkills) {
+  if (!availableSkills.includes(skillName)) {
+    console.error(`Unknown skill: ${skillName}. Available skills: ${availableSkills.join(", ")}`);
+    process.exit(1);
+  }
+}
+
+const legacySkillNamesBySkill = {
+  "webcraft-ui": ["webcraft-skills"]
+};
 
 if (!existsSync(commandSource)) {
   console.error(`Command source not found: ${commandSource}`);
@@ -80,25 +119,29 @@ for (const target of targets) {
     process.exit(1);
   }
 
-  const skillTargets = config.skillRoots.map((skillRoot) => join(skillRoot, skillName));
+  for (const skillName of selectedSkills) {
+    const skillSource = join(root, "skills", skillName);
+    const skillTargets = config.skillRoots.map((skillRoot) => join(skillRoot, skillName));
+    const legacySkillNames = legacySkillNamesBySkill[skillName] ?? [];
 
-  for (const skillTarget of skillTargets) {
-    mkdirSync(dirname(skillTarget), { recursive: true });
+    for (const skillTarget of skillTargets) {
+      mkdirSync(dirname(skillTarget), { recursive: true });
 
-    for (const legacySkillName of legacySkillNames) {
-      const legacySkillTarget = join(dirname(skillTarget), legacySkillName);
-      if (existsSync(legacySkillTarget)) {
-        rmSync(legacySkillTarget, { recursive: true, force: true });
-        console.log(`Removed legacy ${legacySkillName} skill from ${legacySkillTarget}`);
+      for (const legacySkillName of legacySkillNames) {
+        const legacySkillTarget = join(dirname(skillTarget), legacySkillName);
+        if (existsSync(legacySkillTarget)) {
+          rmSync(legacySkillTarget, { recursive: true, force: true });
+          console.log(`Removed legacy ${legacySkillName} skill from ${legacySkillTarget}`);
+        }
       }
-    }
 
-    if (existsSync(skillTarget)) {
-      rmSync(skillTarget, { recursive: true, force: true });
-    }
+      if (existsSync(skillTarget)) {
+        rmSync(skillTarget, { recursive: true, force: true });
+      }
 
-    cpSync(skillSource, skillTarget, { recursive: true });
-    console.log(`Installed ${skillName} skill to ${skillTarget}`);
+      cpSync(skillSource, skillTarget, { recursive: true });
+      console.log(`Installed ${skillName} skill to ${skillTarget}`);
+    }
   }
 
   if (config.supportsCommands) {

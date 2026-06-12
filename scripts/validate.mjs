@@ -92,6 +92,30 @@ for (const file of requiredFiles) {
   }
 }
 
+const skillsRoot = join(root, "skills");
+if (existsSync(skillsRoot)) {
+  const skillEntries = readdirSync(skillsRoot, { withFileTypes: true }).filter((entry) => entry.isDirectory());
+  if (skillEntries.length === 0) {
+    errors.push("No skill directories found under skills/");
+  }
+
+  for (const entry of skillEntries) {
+    const skillPath = join(skillsRoot, entry.name, "SKILL.md");
+    if (!existsSync(skillPath)) {
+      errors.push(`Missing SKILL.md for skills/${entry.name}`);
+      continue;
+    }
+
+    const skill = readFileSync(skillPath, "utf8");
+    const frontmatterMatch = skill.match(/^---\r?\nname: ([a-z0-9-]+)\r?\ndescription: .+\r?\n---/s);
+    if (!frontmatterMatch) {
+      errors.push(`Invalid frontmatter in skills/${entry.name}/SKILL.md`);
+    } else if (frontmatterMatch[1] !== entry.name) {
+      errors.push(`Skill name mismatch: skills/${entry.name}/SKILL.md declares ${frontmatterMatch[1]}`);
+    }
+  }
+}
+
 function collectMarkdownFiles(directory) {
   const entries = readdirSync(directory, { withFileTypes: true });
   const files = [];
