@@ -17,6 +17,8 @@ const requiredFiles = [
   "core/checklists/modules/forms-controls.zh.md",
   "core/checklists/modules/visual-system.md",
   "core/checklists/modules/visual-system.zh.md",
+  "core/checklists/modules/design-contract.md",
+  "core/checklists/modules/design-contract.zh.md",
   "core/checklists/modules/accessibility.md",
   "core/checklists/modules/accessibility.zh.md",
   "core/checklists/modules/ai-template-smell.md",
@@ -31,6 +33,8 @@ const requiredFiles = [
   "skills/webcraft-ui/references/checklists/modules/forms-controls.zh.md",
   "skills/webcraft-ui/references/checklists/modules/visual-system.md",
   "skills/webcraft-ui/references/checklists/modules/visual-system.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/design-contract.md",
+  "skills/webcraft-ui/references/checklists/modules/design-contract.zh.md",
   "skills/webcraft-ui/references/checklists/modules/accessibility.md",
   "skills/webcraft-ui/references/checklists/modules/accessibility.zh.md",
   "skills/webcraft-ui/references/checklists/modules/ai-template-smell.md",
@@ -282,6 +286,60 @@ for (const file of [
     JSON.parse(readFileSync(path, "utf8"));
   } catch (error) {
     errors.push(`Invalid JSON in ${file}: ${error.message}`);
+  }
+}
+
+function validateProjectConfig(file) {
+  const path = join(root, file);
+  if (!existsSync(path)) return;
+
+  let config;
+  try {
+    config = JSON.parse(readFileSync(path, "utf8"));
+  } catch {
+    return;
+  }
+
+  if (!("designContract" in config)) return;
+
+  const contract = config.designContract;
+  if (!contract || typeof contract !== "object" || Array.isArray(contract)) {
+    errors.push(`designContract must be an object in ${file}`);
+    return;
+  }
+
+  if ("source" in contract && (typeof contract.source !== "string" || contract.source.trim().length === 0)) {
+    errors.push(`designContract.source must be a non-empty string in ${file}`);
+  }
+
+  const allowedStrictness = new Set(["reference", "prefer", "enforce"]);
+  if ("strictness" in contract && !allowedStrictness.has(contract.strictness)) {
+    errors.push(`designContract.strictness must be reference, prefer, or enforce in ${file}`);
+  }
+
+  for (const field of ["colors", "typography", "spacing", "shape", "components", "motion", "content"]) {
+    if (
+      field in contract &&
+      (!contract[field] || typeof contract[field] !== "object" || Array.isArray(contract[field]))
+    ) {
+      errors.push(`designContract.${field} must be an object in ${file}`);
+    }
+  }
+}
+
+validateProjectConfig("examples/project-config/config.json");
+
+for (const file of [
+  "core/checklists/ui-audit.md",
+  "core/checklists/ui-audit.zh.md",
+  "skills/webcraft-ui/references/checklists/ui-audit.md",
+  "skills/webcraft-ui/references/checklists/ui-audit.zh.md"
+]) {
+  const path = join(root, file);
+  if (!existsSync(path)) continue;
+  const text = readFileSync(path, "utf8");
+  if (!text.includes("design-contract")) {
+    errors.push(`Missing design-contract module routing in ${file}`);
   }
 }
 

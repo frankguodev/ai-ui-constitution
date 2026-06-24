@@ -33,9 +33,9 @@
 完整 audit 体系是判断背景，不是每次都要完整执行的任务清单。硬预算以 `references/modes/audit-modes.json` 为准；下面是执行解释：
 
 - `Quick Audit`：只做主路径和当前可见界面的风险扫描。页面可运行时，最多检查当前视口或 1 个最关键视口；只做明显的布局/可点击/响应式 smoke check。最多 8 条 findings，只报告 Critical 和明显 Major，不做评分，不输出 Minor，不展开长尾细节。
-- `Standard Audit`：默认实用模式。覆盖主要页面/功能和 2 个关键视口：1280px 桌面 + 1 个移动端视口；做一次首屏布局关系检查和 pointer / hover smoke check。先找Critical / Major，再挑少量高价值的Minor。通常 8 到 16 条 findings，不输出完整分类报告，不做完整 Content Stress Test，不默认评分。
-- `Focused Audit`：聚焦深查模式。覆盖主要页面/功能、关键视口和风险触发视口；最多 32 条 findings，不默认评分，不输出完整分类报告。先用核心视口定位系统性 Critical / Major，再按风险扩展平板、宽屏、小手机、媒体、滚动、原生控件和内容压力检查。
-- `Deep Audit`：系统展开主 rubric、相关 modules、评分模型、Content Stress Test、更多视口和深度审查细项。适合上线前、严格排查或用户明确要求“全面”。即便是 Deep Audit，也先输出 Top Findings，再按分类展开，不要把所有通过项写进报告。
+- `Standard Audit`：默认实用模式。覆盖主要页面/功能和 2 个关键视口：1280px 桌面 + 1 个移动端视口；检查首屏关系，并在每个主要页面至少抽查 1 个核心功能模块的内部空间和状态。先找 Critical / Major，再挑少量高价值 Minor。通常 8 到 16 条 findings，不输出完整分类报告，不做完整 Content Stress Test，不默认评分。
+- `Focused Audit`：聚焦深查模式。覆盖主要页面/功能、关键视口和风险触发视口；最多 32 条 findings，不默认评分，不输出完整分类报告。核心视口下检查所有主要功能模块，并抽查重复组件内部细节，再按风险扩展平板、宽屏、小手机、媒体、滚动、原生控件和内容压力。
+- `Deep Audit`：系统展开主 rubric、相关 modules、评分模型、Content Stress Test、更多视口和深度审查细项。至少在一个核心视口完成页面级、模块级、组件内部三级扫描，再在风险视口复查暴露问题的层级。即便是 Deep Audit，也先输出 Top Findings，不把所有通过项写进报告。
 
 任何模式都不要为了“覆盖分类”而制造 finding。发现多个同源问题时，优先合并为一个系统性 finding。
 
@@ -80,7 +80,7 @@
 - 输出格式
 - 去重优先级
 
-具体细项通过 modules 读取，例如 layout、responsive、components-states、forms-controls、visual-system、accessibility 和 ai-template-smell。
+具体细项通过 modules 读取，例如 layout、responsive、components-states、forms-controls、visual-system、design-contract、accessibility 和 ai-template-smell。
 
 ### 模块读取策略
 
@@ -88,8 +88,8 @@
 
 - `Quick Audit`：默认不展开模块。只有当问题明显命中时，读取相关 1 个模块，例如移动端崩坏读 `responsive`，可点击信号缺失读 `components-states`，首屏关系异常读 `layout`。
 - `Standard Audit`：默认优先考虑 `layout`、`components-states`、`responsive`。如果页面包含表单/筛选/上传/批量操作，补读 `forms-controls`；如果主要风险是风格拼贴、token 混乱或主题保持，补读 `visual-system`。
-- `Focused Audit`：默认读取 Standard 相关模块，并按页面风险补读 `forms-controls`、`visual-system`、`accessibility` 或 `ai-template-smell`。不要为了“完整”读取无关模块；优先覆盖会影响核心任务、响应式稳定、控件一致性和主题成熟度的模块。
-- `Deep Audit`：按页面类型和风险读取所有相关模块，可包括 `accessibility` 和 `ai-template-smell`。但仍然只报告有证据、有影响、有修复价值的问题，不把模块条目当作检查清单逐项输出。
+- `Focused Audit`：默认读取 Standard 相关模块，并按页面风险补读 `forms-controls`、`visual-system`、`design-contract`、`accessibility` 或 `ai-template-smell`。`design-contract` 只在项目存在契约、用户要求设计系统检查或出现系统性 token / recipe 漂移时读取。不要为了“完整”读取无关模块。
+- `Deep Audit`：按页面类型和风险读取所有相关模块，可包括 `design-contract`、`accessibility` 和 `ai-template-smell`。没有契约信号时不要为了 Deep 而自动读取 `design-contract`。
 
 模块触发规则：
 
@@ -98,6 +98,7 @@
 - 375px、768px、1280px、中间断点、横向滚动、固定宽度、sticky/fixed 遮挡异常：读 `modules/responsive.zh.md`。
 - 表单、搜索筛选、选择控件、上传、批量操作、错误恢复、原生控件混用异常：读 `modules/forms-controls.zh.md`。
 - 字体层级、颜色职责、spacing、radius、border、shadow、装饰语言、主题保留异常：读 `modules/visual-system.zh.md`。
+- 项目存在 `design.md` / `designContract`，用户要求检查设计系统，或共享 token、recipe、typography role、variant / size / state 系统性漂移：读 `modules/design-contract.zh.md`。
 - 键盘路径、focus-visible、可访问名称、语义结构、目标尺寸、高对比度异常：读 `modules/accessibility.zh.md`。
 - AI 模板感、空泛 slogan、虚假数据、过度 badge/bento/渐变、section 拼贴异常：读 `modules/ai-template-smell.zh.md`。
 
@@ -117,6 +118,7 @@
 
 - 优先用浏览器检查真实布局、滚动、点击、focus、弹窗和响应式。
 - 记录实际视口、页面区域、滚动位置、交互状态和可见现象。
+- 呼吸感、局部密度和视觉重量必须优先根据实际渲染判断；代码中的 gap、padding、margin 和 token 只用于定位根因，不能仅凭数值把紧凑或宽松写成确定缺陷。
 - 对可运行页面，重点验证 source code 难以确认的内容：媒体裁切、弹层层级、滚动吸附、锚点跳转、表单状态和移动端触控。
 - 对可运行页面，必须做一轮 pointer / hover smoke check：主要按钮、搜索按钮、链接、标签、卡片操作、图标按钮和自定义 clickable 区域在鼠标悬停时应显示正确可点击意图和状态反馈。
 - 不要只看源码就下最终结论。
@@ -190,6 +192,8 @@
 
 `Standard Audit` 可按页面类型增加 768px tablet，但不是强制矩阵。只有当问题明显涉及平板断点、侧栏、表格或多列布局时才补查。
 
+`Standard Audit` 在核心视口还应对每个主要页面抽查至少 1 个核心功能模块，例如导航、筛选区、表单、卡片、表格工具栏或 CTA。抽查模块时进入组件内部，不只看模块外框。
+
 `Focused Audit` 默认检查：
 
 - 375px mobile
@@ -201,14 +205,24 @@
 - 宽屏构图/大屏留白/容器约束风险：1440px 或 1920px
 - 移动端已经出现裁切、横向滚动或密度风险：360px 或 390px
 
+`Focused Audit` 在核心视口检查所有主要功能模块，并对重复出现的卡片、表单项、按钮组或工具栏抽查至少一个代表实例；相同根因跨模块出现时合并 finding，但保留代表位置。
+
 如果时间或环境只能检查部分视口，至少检查当前问题最可能出现的 1 个视口，并在报告中写清未验证项。
 
-`Standard Audit`、`Focused Audit` 和 `Deep Audit` 的浏览器检查应额外扫一遍首屏布局关系：
+`Standard Audit`、`Focused Audit` 和 `Deep Audit` 的浏览器检查先扫首屏布局关系：
 
 - hero 两栏、搜索区、主要视觉容器和下一段内容之间是否有压住、断裂、错位或空洞感。
 - mockup、插画、截图、图表或装饰容器是否内容过少但占位过大，导致首屏构图失衡。
 - 搜索框、CTA、标签组、卡片组是否与上下 section 的间距、对齐和层级关系自然。
 - 可点击元素是否有 cursor、hover、active 和 focus-visible 等基本交互信号。
+
+然后按模式执行空间关系扫描：
+
+1. 页面级：首屏、section、主要内容区和行动路径之间是否过挤、断裂、空洞或主次失衡。
+2. 模块级：导航、筛选、表单、卡片、表格、工具栏、弹层和 CTA 的 padding、分组、密度和操作区是否成立。
+3. 组件内部：图标/文字、标题/说明、label/控件/帮助或错误文本、按钮组、状态标签等紧密关系是否拥挤、粘连或被过大间距拆散。
+
+不要把三级扫描理解为逐 DOM 节点穷举。Standard 做核心模块抽查，Focused 覆盖主要模块并抽查重复组件，Deep 才系统覆盖三级关系。
 
 Deep Audit 增加：
 
@@ -224,6 +238,7 @@ Deep Audit 还应尽量检查：
 - 滚动：sticky header 下的锚点跳转、scroll-margin / scroll-padding、scroll snap、滚动条出现时的布局跳动。
 - 数据内容：表格、代码块、富文本、长列表和多列内容在移动端、平板和大屏的降级方式。
 - 状态和可访问性：focus-visible、键盘路径、forced colors / 高对比度风险、reduced motion。
+- 局部完成度：在表单、筛选/工具栏、卡片或数据密集区中选择有代表性的模块，确认组件内部 spacing、line-height、状态文案和点击热区没有被页面级结论掩盖。
 
 如果 audit 实际打开浏览器并保存截图，优先把截图保存到当前项目的 `examples/reports/assets/audit/` 下，按本次审查建立子目录，例如 `examples/reports/assets/audit/2026-05-24-home/`。文件名应包含页面或区域、视口和状态，例如 `home-375.png`、`dashboard-1280-filter-open.png`。如果项目不可写、用户指定了其他目录，或只能使用工具内临时截图，也要在报告中说明截图保存位置或未落盘原因。
 
@@ -239,9 +254,9 @@ Audit 默认不写报告文件；只有用户明确要求记录、生成报告�
 
 根据审查方式记录证据：
 
-- 浏览器证据：视口宽度、页面区域、交互状态、滚动位置、可见现象。
+- 浏览器证据：视口宽度、页面区域、交互状态、滚动位置、具体元素组合和可见现象；空间 finding 应说明是页面级、模块级还是组件内部关系。
 - 服务证据：如果本次 audit 启动或复用了 dev / preview / static server，报告中写明 URL / 端口、服务来源、是否已关闭临时服务，以及是否存在端口或进程残留。
-- 代码证据：文件路径、组件名、CSS 类、断点、状态分支、样式 token、组件 props、语义结构。
+- 代码证据：文件路径、组件名、CSS 类、断点、状态分支、样式 token、组件 props、语义结构；spacing 数值通常用于解释可见问题，不应脱离渲染结果单独证明“太挤”或“太空”。
 - 截图证据：截图区域、可见元素、层级关系、裁切或遮挡现象。
 - 截图文件：如果本次 audit 保存了截图，在报告中列出截图目录和关键截图文件；如果截图只用于临时观察且没有落盘，也要说明。
 - 临时文件：如果本次 audit 创建了临时脚本、临时页面、临时数据或一次性下载文件，默认在报告前删除；只有作为证据产物保留时才列入 `Artifacts(证据产物)`。
@@ -260,7 +275,7 @@ Audit 默认不写报告文件；只有用户明确要求记录、生成报告�
 4. Components and states：cursor、hover、active、focus-visible、disabled、loading、empty、error、success。
 5. Form/control consistency：输入、选择、下拉、多选、菜单、批量操作是否沿用项目已有组件体系。
 6. Data and rich content：表格、图表、代码块、富文本、长列表、数字排版和内容密度。
-7. Visual system：spacing、typography、color、radius、border、shadow、background、filter、outline。
+7. Visual system：按页面级、模块级、组件内部检查 spacing、typography、color、radius、border、shadow、background、filter、outline，避免只发现全局 token 问题而漏掉核心模块细节。
 8. Interaction layers and motion：dropdown、popover、modal、toast、drawer、scroll behavior、动效、reduced motion。
 9. Content stress：长文案、中英文混排、不同数据数量、不同图片比例、多列/分页/打印场景。
 10. Accessibility baseline：键盘路径、可访问名称、语义结构、forced colors、高对比度。
@@ -303,9 +318,9 @@ Audit 默认不写报告文件；只有用户明确要求记录、生成报告�
 
 - 已经找到会阻断使用的 Critical 时，先停止深挖 Minor，优先输出风险和修复顺序。
 - Quick Audit 中，找到 Critical 或 5 到 8 个明显 Major 后即可停止，直接给修复顺序。
-- Standard Audit 中，如果 Top Findings 已覆盖主要风险，不继续列低价值 polish 或深度细项。
-- Focused Audit 中，优先扩展系统性问题和风险视口；如果 Top Findings 已经解释主要风险，不继续追逐低价值 Minor 或全量评分。
-- Deep Audit 中，可以继续展开，但要把系统性问题优先于零散细节；同类 Minor 应合并，不逐点堆叠。
+- Standard Audit 中，如果 Top Findings 已覆盖主要风险，仍需完成核心功能模块的内部空间抽查；之后不继续列低价值 polish。
+- Focused Audit 中，优先扩展系统性问题和风险视口，但在停止前应覆盖所有主要功能模块；同类局部问题合并后保留代表位置，不追逐低价值 Minor 或全量评分。
+- Deep Audit 中，系统性问题优先于零散细节，但不能用系统性结论替代三级扫描；同类 Minor 应合并，不逐点堆叠。多个局部 Minor 共同造成明显拥挤、扫描困难或操作压迫时，评估为一个系统性 Major。
 - 如果证据不足，不继续推断；把问题放入 `Open Questions` 或标注需要验证。
 
 ## 13. 禁止事项

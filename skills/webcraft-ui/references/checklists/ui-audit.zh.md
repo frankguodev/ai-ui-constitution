@@ -19,7 +19,7 @@
 2. 先看核心功能能否完成，再看信息是否清楚，然后看视觉体系、响应式、状态和精致度。
 3. 修复建议默认保留原主题风格。只有用户明确要求 redesign，或当前视觉方向本身阻断理解/使用时，才建议重做方向。
 4. 有浏览器环境时优先实测；没有实测时必须说明“未实测”，并把基于代码/结构推断的风险写清楚。
-5. 证据优先来自用户可见结果，其次来自组件、CSS、设计 token、DOM 结构、断点、截图或交互实测。
+5. 证据优先来自用户可见结果，其次来自组件、CSS、设计 token、项目 Design Contract、DOM 结构、断点、截图或交互实测。
 6. 输出时先列问题，再给修复顺序；不要先写长篇总结，也不要为了覆盖分类强行制造问题。
 
 ### 必须先识别的语境
@@ -158,6 +158,18 @@ Deep Audit 或用户要求评分时使用。每项 0 到 5 分：
 - 同屏出现多套圆角、边框、阴影、按钮风格、图标线宽或强调色。
 - fix/polish 必须保留现有主题，只提升成熟度和一致性。
 
+### `modules/design-contract.zh.md`
+
+用于读取项目声明的 Design Contract，判断 semantic token、state ladder、typography role、component recipe、motion / elevation 和 content voice 基线。
+
+优先使用场景：
+
+- 项目存在 `design.md`、design token 文件，或 `.webcraft-skills/config.json` 声明 `designContract`。
+- 用户要求遵守或检查设计系统，或改动涉及共享组件、theme、typography scale、variant / size / state。
+- 多个页面或组件出现系统性 token 漂移，需要确认项目目标标准。
+
+没有 Design Contract 不是问题；外部 design system 默认只是参考，只有用户明确采用后才成为项目目标。
+
 ### `modules/accessibility.zh.md`
 
 用于键盘路径、focus-visible、可访问名称、语义结构、目标尺寸、状态表达、高对比度和 reduced motion 风险。
@@ -183,6 +195,7 @@ Deep Audit 或用户要求评分时使用。每项 0 到 5 分：
 - 导航：布局位置和响应式折叠归 `Layout / Responsive`，当前态、hover、菜单反馈归 `Components And States`，键盘路径和 aria 归 `Accessibility`。
 - 弹窗、drawer、popover、toast：遮挡、滚动和层级归 `Layout / Responsive`，打开/关闭/loading/empty/error 状态归 `Components And States`，焦点管理和 Escape 归 `Accessibility`。
 - 动效：状态反馈动效归 `Components And States`，装饰性动效和视觉节奏归 `Visual System`，reduced motion 或眩晕风险归 `Accessibility`。
+- Design Contract：项目标准、token / recipe 来源和 strictness 归 `Design Contract`；用户可见的一致性结果仍归 `Visual System`，状态可用性仍归 `Components And States / Accessibility`。
 
 ## 输出规则
 

@@ -170,9 +170,9 @@ The most reliable prompts usually name the target page or file, the workflow, im
 Audit depth:
 
 - `Quick Audit`: fast pass for "take a quick look" requests. Reports only Critical and obvious Major issues, up to 8 findings.
-- `Standard Audit`: default practical mode. Reports Critical, Major, and a small number of high-value Minor issues, usually 8 to 16 findings.
-- `Focused Audit`: deeper practical audit for serious review without the full cost of Deep Audit. No score by default, up to 32 findings, and expands viewports only when risk signals justify it.
-- `Deep Audit`: full pass for launch readiness or strict review. Uses the full audit system, scoring model, content stress tests, broader viewport coverage, and deeper checks.
+- `Standard Audit`: default practical mode. In addition to page-level risk, it samples at least one core functional module per main page for internal spacing and states; usually 8 to 16 findings.
+- `Focused Audit`: deeper practical audit that covers all major functional modules at core viewports and samples repeated component details. No score by default, up to 32 findings.
+- `Deep Audit`: full pass for launch readiness or strict review. Uses the full audit system, scoring, content stress tests, and page/module/component-internal scanning at core viewports.
 
 These audit depths use structured budgets for finding counts, severity scope, scoring expectations, viewport coverage, and output detail, so agents are less likely to make light audits too heavy or deep audits too shallow.
 
@@ -391,7 +391,16 @@ Plain prompt usage is not part of the stable release yet.
 
 ## Project Extensions
 
-Create `.webcraft-skills/EXTEND.md` and `.webcraft-skills/config.json` in the target project to override default audit standards, brand constraints, radius scale, viewports, and visual rules.
+Create `.webcraft-skills/EXTEND.md` and `.webcraft-skills/config.json` in the target project to override default audit standards, brand constraints, radius scale, viewports, and visual rules. Projects may also declare a lightweight `designContract` or point to their own `design.md`; it is read only for design-system-relevant work and does not turn external references into project rules automatically.
+
+```json
+{
+  "designContract": {
+    "source": "../design.md",
+    "strictness": "prefer"
+  }
+}
+```
 
 For user-level defaults and priority rules, see [`docs/configuration.md`](./docs/configuration.md).
 

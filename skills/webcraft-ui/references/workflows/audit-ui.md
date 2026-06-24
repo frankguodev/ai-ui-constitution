@@ -78,7 +78,7 @@ At runtime, read `references/checklists/ui-audit.md`. Apply:
 - Output format
 - Deduplication priority
 
-Use focused modules for detailed checks such as layout, responsive behavior, components/states, forms/controls, visual-system consistency, accessibility, and AI-template smell.
+Use focused modules for detailed checks such as layout, responsive behavior, components/states, forms/controls, visual-system consistency, design contracts, accessibility, and AI-template smell.
 
 ### Module Reading Strategy
 
@@ -86,8 +86,8 @@ Use focused modules for detailed checks such as layout, responsive behavior, com
 
 - `Quick Audit`: do not expand modules by default. Read at most the directly relevant module when the issue clearly matches it, such as `responsive` for mobile breakage, `components-states` for missing click affordance, or `layout` for first-viewport relationship problems.
 - `Standard Audit`: prioritize `layout`, `components-states`, and `responsive` by default. If the page includes forms, filters, uploads, or bulk actions, also read `forms-controls`; if the risk is visual collage, token drift, or theme preservation, also read `visual-system`.
-- `Focused Audit`: read Standard modules by default, then add `forms-controls`, `visual-system`, `accessibility`, or `ai-template-smell` when page risk calls for them. Do not read unrelated modules for completeness; prioritize modules that affect the core task, responsive stability, control consistency, and visual maturity.
-- `Deep Audit`: read all relevant modules based on page type and risk, including `accessibility` and `ai-template-smell` when applicable. Still report only issues with evidence, impact, and a worthwhile fix; do not output module items as a checklist.
+- `Focused Audit`: read Standard modules by default, then add `forms-controls`, `visual-system`, `design-contract`, `accessibility`, or `ai-template-smell` when page risk calls for them. Read `design-contract` only when the project has a contract, the user requests design-system inspection, or systemic token / recipe drift is present. Do not read unrelated modules for completeness.
+- `Deep Audit`: read all relevant modules based on page type and risk, including `design-contract`, `accessibility`, and `ai-template-smell` when applicable. Do not load `design-contract` merely because the mode is Deep when no contract signal exists.
 
 Module triggers:
 
@@ -96,6 +96,7 @@ Module triggers:
 - `375px`, `768px`, `1280px`, intermediate breakpoint, horizontal scroll, fixed width, or sticky/fixed overlap issues: read `modules/responsive.md`.
 - Forms, search/filter UI, selection controls, uploads, bulk actions, error recovery, or mixed native controls: read `modules/forms-controls.md`.
 - Type hierarchy, color roles, spacing, radius, border, shadow, decorative language, or theme-preservation issues: read `modules/visual-system.md`.
+- Project `design.md` / `designContract`, a design-system inspection request, or systemic shared-token, recipe, typography-role, variant / size / state drift: read `modules/design-contract.md`.
 - Keyboard path, focus-visible, accessible name, semantic structure, target size, or high-contrast issues: read `modules/accessibility.md`.
 - AI-template smell, vague slogans, fabricated data, excessive badges/bento/gradients, or section collage: read `modules/ai-template-smell.md`.
 

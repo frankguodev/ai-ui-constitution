@@ -19,7 +19,7 @@ This file is the main index and judgment framework. Detailed inspection paths li
 2. Check whether the core function can be completed first, then whether information is clear, then visual system, responsiveness, states, and polish.
 3. Fix suggestions preserve the existing theme by default. Recommend redesign only when the user asks for redesign or the current direction itself blocks understanding or use.
 4. Prefer browser verification when available. If not verified in a browser, say so and explain which risks are inferred from code or structure.
-5. Evidence should start from visible user outcomes, then use components, CSS, design tokens, DOM structure, breakpoints, screenshots, or interaction checks.
+5. Evidence should start from visible user outcomes, then use components, CSS, design tokens, the project Design Contract, DOM structure, breakpoints, screenshots, or interaction checks.
 6. Lead with findings, then fix order. Avoid long summaries before issues, and do not invent findings just to cover categories.
 
 ### Context To Identify First
@@ -158,6 +158,18 @@ Use first when:
 - The same screen shows multiple radius systems, borders, shadows, button styles, icon strokes, or accent colors.
 - Fix/polish must preserve the current theme while improving maturity and consistency.
 
+### `modules/design-contract.md`
+
+Use to read the project's declared Design Contract and judge semantic tokens, state ladders, typography roles, component recipes, motion / elevation, and content-voice baselines.
+
+Use first when:
+
+- The project has `design.md`, design-token files, or a `designContract` entry in `.webcraft-skills/config.json`.
+- The user asks to follow or inspect a design system, or the change affects shared components, themes, typography scales, or variant / size / state.
+- Multiple pages or components show systemic token drift and the project target needs to be established.
+
+Missing Design Contract is not a problem. External design systems are references by default and become project targets only when the user explicitly adopts them.
+
 ### `modules/accessibility.md`
 
 Use for keyboard paths, focus-visible, accessible names, semantic structure, target size, state expression, high contrast, and reduced-motion risk.
@@ -183,6 +195,7 @@ Use first when:
 - Navigation: layout placement and responsive collapse belong to `Layout / Responsive`; current state, hover, and menu feedback belong to `Components And States`; keyboard path and aria belong to `Accessibility`.
 - Dialogs, drawers, popovers, and toasts: overlap, scroll, and layering belong to `Layout / Responsive`; open/close/loading/empty/error states belong to `Components And States`; focus management and Escape behavior belong to `Accessibility`.
 - Motion: state-feedback motion belongs to `Components And States`; decorative motion and visual rhythm belong to `Visual System`; reduced-motion or vestibular risk belongs to `Accessibility`.
+- Design Contract: project standards, token / recipe sources, and strictness belong to `Design Contract`; visible consistency remains under `Visual System`, while state usability remains under `Components And States / Accessibility`.
 
 ## Output Rules
 

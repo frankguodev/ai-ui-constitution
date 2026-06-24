@@ -170,9 +170,9 @@ Claude Code 可使用已安装的 slash command prompts：`/ui-audit`、`/ui-rev
 审查深度：
 
 - `Quick Audit`：适合“快速看看”“有没有大问题”。只报告 Critical 和明显 Major，最多 8 条 findings。
-- `Standard Audit`：默认实用模式。报告 Critical、Major 和少量高价值 Minor，通常 8 到 16 条 findings。
-- `Focused Audit`：适合“认真检查”“聚焦深查”“上线前先看主要风险”。比 Standard 更深入，但不默认评分，最多 32 条 findings，并按风险扩展视口。
-- `Deep Audit`：适合“全面排查”“严格 audit”“准备上线”。使用完整 audit 体系、评分模型、Content Stress Test 和更完整的视口检查。
+- `Standard Audit`：默认实用模式。除页面级风险外，每个主要页面至少抽查一个核心功能模块的内部空间和状态；通常 8 到 16 条 findings。
+- `Focused Audit`：适合“认真检查”“聚焦深查”“上线前先看主要风险”。核心视口覆盖所有主要功能模块，并抽查重复组件细节；不默认评分，最多 32 条 findings。
+- `Deep Audit`：适合“全面排查”“严格 audit”“准备上线”。使用完整 audit 体系、评分模型和 Content Stress Test，并在核心视口执行页面级、模块级、组件内部三级扫描。
 
 这些审查模式的 findings 数量、严重级别、评分要求、视口范围和输出细节已经用结构化预算管理，因此不同 Agent 执行时会更稳定，不会把轻量审查做得过重，也不会把深度审查做得过浅。
 
@@ -392,7 +392,16 @@ Plain Prompt 暂时不属于稳定发布能力。
 
 ## 项目扩展
 
-在目标项目中创建 `.webcraft-skills/EXTEND.md` 和 `.webcraft-skills/config.json`，可覆盖默认 UI 审查标准、品牌约束、圆角体系、默认视口等。
+在目标项目中创建 `.webcraft-skills/EXTEND.md` 和 `.webcraft-skills/config.json`，可覆盖默认 UI 审查标准、品牌约束、圆角体系、默认视口等。项目也可以声明轻量 `designContract` 或指向自己的 `design.md`；只有设计系统相关任务才按需读取，外部参考不会自动变成项目规则。
+
+```json
+{
+  "designContract": {
+    "source": "../design.md",
+    "strictness": "prefer"
+  }
+}
+```
 
 用户级默认配置和优先级规则见 [`docs/configuration.md`](./docs/configuration.md)。
 

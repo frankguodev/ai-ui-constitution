@@ -16,6 +16,7 @@ Use this module to strengthen the layout checks in `ui-audit.md`. The goal is no
 - Search / list information pages: glossary, resource-index, knowledge-base, and search pages with a large search field usually should make title, supporting copy, and search bar form a stable centered entry, with following content using the same container rhythm instead of suddenly drifting left, floating, or being separated by excessive whitespace.
 - Visual containers: mockups, illustrations, charts, screenshots, or decorative containers should contain enough meaningful content for their occupied space.
 - Alignment system: container width, horizontal padding, section spacing, and grid/flex gaps should follow one rhythm.
+- Whitespace purpose: empty space between the first viewport and sections should establish hierarchy, pauses, and action paths; do not misclassify missing content, unbalanced composition, or oversized containers as spacing-only problems.
 - Layering: sticky, fixed, absolute, z-index, overlays, toasts, and dropdowns should not hide core text or actions.
 - Content pressure: longer headings, narrower search fields, more chips, or different card counts should not break the first viewport.
 
@@ -43,5 +44,6 @@ Use this module to strengthen the layout checks in `ui-audit.md`. The goal is no
 ## Fix Boundaries
 
 - Preserve the original theme and visual direction by default; fix relationships, proportions, spacing, container width, and layering.
+- Repair content relationships, composition axis, and container proportions before tuning section spacing; do not use large whitespace instead of information structure or compressed spacing to hide hollow modules.
 - Do not redesign the whole page just because the first viewport is broken; make the existing elements work first.
 - If a visual container has no real content, prefer shrinking it, adding meaningful content, turning it into a lighter background, or removing it instead of changing the theme.

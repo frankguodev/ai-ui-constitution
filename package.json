@@ -1,6 +1,6 @@
 {
   "name": "webcraft-skills",
-  "version": "0.1.25",
+  "version": "0.1.27",
   "description": "Webcraft skills collection for reviewing, fixing, polishing, and building mature web UI.",
   "license": "MIT",
   "type": "module",
@@ -10,6 +10,8 @@
   "files": [
     "skills/",
     "commands/",
+    "docs/configuration.md",
+    "examples/project-config/",
     "scripts/install.mjs",
     "README.md",
     "README_zh_CN.md",
