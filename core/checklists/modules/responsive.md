@@ -15,6 +15,7 @@ Use this module to strengthen responsive-stability checks in `ui-audit.md`. It i
 - Degradation strategy: desktop columns, split layouts, card grids, toolbars, filters, and tables need clear stack, wrap, scroll, collapse, or reflow behavior on small and tablet widths.
 - Stable dimensions: images, video, iframes, charts, screenshots, cards, buttons, and toolbars should use stable ratios, min/max constraints, container constraints, or reasonable wrapping.
 - Intermediate breakpoints: tablet, small desktop, and half-window widths should not be worse than either mobile or desktop.
+- Spatial hierarchy: breakpoints may change concrete spacing tokens, but should preserve the relationship `element < group < section`; do not scale desktop spacing uniformly or collapse every mobile gap to one value.
 - Sticky/fixed regions: nav bars, bottom action bars, sidebars, and filter bars should not hide content, form errors, dialogs, or anchor targets.
 
 ## Mode Budget
@@ -40,6 +41,7 @@ Use this module to strengthen responsive-stability checks in `ui-audit.md`. It i
 
 - Mobile is just a shrunken desktop: visible but hard to read and tap.
 - `768px` or `834px` is messier than mobile, showing that only phone and desktop were considered.
+- Mobile uniformly shrinks padding and gaps until labels, controls, action groups, and sections lose their grouping hierarchy.
 - Images or mockups lack aspect-ratio and jump in height during loading.
 - Tables, code blocks, or long filters lack a horizontal scroll container or collapse strategy.
 - Sticky headers cover anchor headings, or bottom action bars cover submit buttons or form errors.

@@ -40,6 +40,8 @@ Preserving the theme does not mean freezing defects. If a visual trait causes a 
 
 If the fix would fundamentally change the overall style direction, put it into `Open Questions` and ask the user to confirm.
 
+Do not load the Design Contract for ordinary local fixes. Read `references/checklists/modules/design-contract.md` only when the finding explicitly comes from contract divergence or the repair affects shared tokens, component recipes, typography roles, variant / size / state, motion, or elevation. Recheck the corresponding contract item after the fix, and do not expand contract repair into redesign. If the contract appears stale or conflicts broadly with stable implementation, stop expanding and put it in `Open Questions`.
+
 ## 3. Choose Strategy By Source
 
 - `audit`: fix by Critical / Major / Minor and Fix Order. If the source is `Focused Audit`, prioritize Top Findings, systemic Major issues, and risk-viewport issues; do not expand into Deep-level refactoring.

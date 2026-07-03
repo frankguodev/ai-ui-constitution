@@ -80,7 +80,7 @@
 - 输出格式
 - 去重优先级
 
-具体细项通过 modules 读取，例如 layout、responsive、components-states、forms-controls、visual-system、accessibility 和 ai-template-smell。
+具体细项通过 modules 读取，例如 layout、responsive、components-states、forms-controls、visual-system、design-contract、accessibility 和 ai-template-smell。
 
 ### 模块读取策略
 
@@ -88,8 +88,8 @@
 
 - `Quick Audit`：默认不展开模块。只有当问题明显命中时，读取相关 1 个模块，例如移动端崩坏读 `responsive`，可点击信号缺失读 `components-states`，首屏关系异常读 `layout`。
 - `Standard Audit`：默认优先考虑 `layout`、`components-states`、`responsive`。如果页面包含表单/筛选/上传/批量操作，补读 `forms-controls`；如果主要风险是风格拼贴、token 混乱或主题保持，补读 `visual-system`。
-- `Focused Audit`：默认读取 Standard 相关模块，并按页面风险补读 `forms-controls`、`visual-system`、`accessibility` 或 `ai-template-smell`。不要为了“完整”读取无关模块；优先覆盖会影响核心任务、响应式稳定、控件一致性和主题成熟度的模块。
-- `Deep Audit`：按页面类型和风险读取所有相关模块，可包括 `accessibility` 和 `ai-template-smell`。但仍然只报告有证据、有影响、有修复价值的问题，不把模块条目当作检查清单逐项输出。
+- `Focused Audit`：默认读取 Standard 相关模块，并按页面风险补读 `forms-controls`、`visual-system`、`design-contract`、`accessibility` 或 `ai-template-smell`。`design-contract` 只在项目存在契约、用户要求设计系统检查或出现系统性 token / recipe 漂移时读取。不要为了“完整”读取无关模块。
+- `Deep Audit`：按页面类型和风险读取所有相关模块，可包括 `design-contract`、`accessibility` 和 `ai-template-smell`。没有契约信号时不要为了 Deep 而自动读取 `design-contract`。
 
 模块触发规则：
 
@@ -98,6 +98,7 @@
 - 375px、768px、1280px、中间断点、横向滚动、固定宽度、sticky/fixed 遮挡异常：读 `modules/responsive.zh.md`。
 - 表单、搜索筛选、选择控件、上传、批量操作、错误恢复、原生控件混用异常：读 `modules/forms-controls.zh.md`。
 - 字体层级、颜色职责、spacing、radius、border、shadow、装饰语言、主题保留异常：读 `modules/visual-system.zh.md`。
+- 项目存在 `design.md` / `designContract`，用户要求检查设计系统，或共享 token、recipe、typography role、variant / size / state 系统性漂移：读 `modules/design-contract.zh.md`。
 - 键盘路径、focus-visible、可访问名称、语义结构、目标尺寸、高对比度异常：读 `modules/accessibility.zh.md`。
 - AI 模板感、空泛 slogan、虚假数据、过度 badge/bento/渐变、section 拼贴异常：读 `modules/ai-template-smell.zh.md`。
 

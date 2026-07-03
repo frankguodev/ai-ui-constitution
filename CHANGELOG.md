@@ -4,6 +4,52 @@ English | [中文](./CHANGELOG_zh_CN.md)
 
 ---
 
+## v0.1.27 - 2026-06-24
+
+### Design Contract
+
+- Added an on-demand bilingual `design-contract` module for distinguishing existing project facts, project contracts, extension config, and external references by source and priority.
+- Added semantic-token, state-ladder, typography-role, component-recipe, motion / elevation, and content-voice baselines without embedding concrete Geist or other external design-system values.
+- Added `reference`, `prefer`, and `enforce` strictness levels, with explicit rules against inventing missing domains or automatically promoting external references into project rules.
+
+### Workflow Integration
+
+- Added Design Contract routing to `audit-ui` and the main checklist, loading it only when a contract exists, the user requests design-system inspection, or systemic token / recipe drift appears.
+- Added short routing rules to `build-ui`, `review-ui`, `polish-ui`, and `fix-ui` so ordinary tasks keep their current reading cost and contract repair does not expand into redesign.
+- Kept responsibility boundaries explicit: Design Contract defines project standards, `visual-system` judges visible consistency, and existing state/accessibility modules retain usability ownership.
+
+### Audit Granularity
+
+- Expanded spatial inspection from first-viewport and systemic-token scanning into page, module, and component-internal relationships, with cost controlled by Quick / Standard / Focused / Deep modes.
+- Standard samples at least one core functional module per main page; Focused covers all major modules and representative repeated components; Deep systematically completes all three levels at core viewports.
+- Strengthened browser evidence: breathing room and local density are judged from rendered output, while source spacing values explain causes rather than proving "too cramped" or "too empty" alone.
+- Adjusted stop conditions so Top Findings or systemic conclusions do not prematurely hide core-module detail; repeated local Minor issues may be merged into a systemic Major when they create clear pressure.
+
+### Configuration
+
+- Extended the project config example with optional `source`, `strictness`, colors, typography, spacing, shape, components, motion, and content domains.
+- Updated `EXTEND.md`, configuration documentation, and both READMEs with path resolution, legacy `visualTokens` compatibility, and external-reference boundaries.
+- Included configuration documentation and the project-config example in the npm package so installed Design Contract support has accessible setup guidance.
+
+### Validation
+
+- Extended validation for bilingual Design Contract modules, checklist routing, config object shape, source, strictness, and optional-domain types.
+- Preserved legacy config compatibility without adding a complex JSON Schema or runtime dependency.
+
+## v0.1.26 - 2026-06-24
+
+### Visual System
+
+- Consolidated breathing-room guidance into an element/group/section spatial relationship model that judges content relationships before applying concrete spacing tokens.
+- Distinguished effective whitespace, ineffective whitespace, and content hollowness so spacing changes do not hide composition, section-purpose, or information-density problems.
+- Added `within-group < between-group < section` as a default density relationship while keeping it a judgment framework rather than a fixed numeric rule.
+
+### Build / Polish
+
+- Added three-level spatial relationship generation and self-check rules to `build-ui`, preventing uniformly enlarged gaps for breathing room or uniformly compressed spacing for superficial neatness.
+- Changed `polish-ui` spacing order to identify grouping, section purpose, and composition before normalizing containers, padding, gaps, and section spacing.
+- Added whitespace-purpose and content-hollowness checks to `layout`, plus responsive preservation of spatial hierarchy across breakpoints.
+
 ## v0.1.25 - 2026-05-27
 
 ### Build

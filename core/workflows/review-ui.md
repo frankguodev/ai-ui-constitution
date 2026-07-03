@@ -44,6 +44,8 @@ Confirm or infer:
 
 If the scope looks like a page or site health check, decide whether it should be `audit-ui` instead. Do not compress an Audit request into Review for convenience.
 
+When the change affects design tokens, shared components, themes, typography scales, variant / size / state, motion, or elevation and the project has `design.md` or `designContract`, read `references/checklists/modules/design-contract.md`. Review only whether this change diverges from the applicable contract; do not expand into a site-wide design-system audit. Do not load it without a contract signal.
+
 ## 3. Review Modes
 
 ### Quick Review

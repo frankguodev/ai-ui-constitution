@@ -33,9 +33,9 @@ Use `Standard Audit` when the user does not specify.
 The full audit system is judging context, not a task list to fully execute every time. Hard budgets come from `references/modes/audit-modes.json`; the notes below explain how to apply them:
 
 - `Quick Audit`: scan the main path and currently visible UI for risk. When the page can run, check the current viewport or 1 most important viewport; run only obvious layout/clickability/responsive smoke checks. Up to 8 findings, Critical and obvious Major only, no score, no Minor, no long-tail detail.
-- `Standard Audit`: default practical mode. Cover main pages/features and 2 key viewports: 1280px desktop + 1 mobile viewport; run one first-viewport layout relationship check and one pointer / hover smoke check. Find Critical / Major issues first, then include a few high-value Minor findings. Usually 8 to 16 findings, no full category report, no full Content Stress Test, no default score.
-- `Focused Audit`: focused deep practical mode. Cover main pages/features, key viewports, and risk-triggered extra viewports; up to 32 findings, no default score, no full category report. Use core viewports to find systemic Critical / Major issues first, then expand to tablet, wide desktop, small mobile, media, scrolling, native controls, and content stress only when risk signals justify it.
-- `Deep Audit`: systematically use the main rubric, relevant modules, scoring model, Content Stress Test, extra viewports, and deep-audit details. Use it for pre-launch, strict review, or when the user explicitly asks for thorough coverage. Even in Deep Audit, lead with Top Findings before category detail, and do not list passing checks.
+- `Standard Audit`: default practical mode. Cover main pages/features and 2 key viewports: 1280px desktop + 1 mobile viewport; inspect first-viewport relationships and sample at least 1 core functional module per main page for internal spacing and states. Find Critical / Major issues first, then include a few high-value Minor findings. Usually 8 to 16 findings, no full category report, no full Content Stress Test, no default score.
+- `Focused Audit`: focused deep practical mode. Cover main pages/features, key viewports, and risk-triggered extra viewports; up to 32 findings, no default score, no full category report. Inspect every major functional module at core viewports and sample repeated component internals, then expand by risk to tablet, wide desktop, small mobile, media, scrolling, native controls, and content stress.
+- `Deep Audit`: systematically use the main rubric, relevant modules, scoring model, Content Stress Test, extra viewports, and deep-audit details. Complete page-level, module-level, and component-internal scanning at least at one core viewport, then recheck the affected level at risk viewports. Lead with Top Findings and do not list passing checks.
 
 In every mode, do not create findings just to cover categories. When multiple issues share one root cause, prefer one systemic finding.
 
@@ -78,7 +78,7 @@ At runtime, read `references/checklists/ui-audit.md`. Apply:
 - Output format
 - Deduplication priority
 
-Use focused modules for detailed checks such as layout, responsive behavior, components/states, forms/controls, visual-system consistency, accessibility, and AI-template smell.
+Use focused modules for detailed checks such as layout, responsive behavior, components/states, forms/controls, visual-system consistency, design contracts, accessibility, and AI-template smell.
 
 ### Module Reading Strategy
 
@@ -86,8 +86,8 @@ Use focused modules for detailed checks such as layout, responsive behavior, com
 
 - `Quick Audit`: do not expand modules by default. Read at most the directly relevant module when the issue clearly matches it, such as `responsive` for mobile breakage, `components-states` for missing click affordance, or `layout` for first-viewport relationship problems.
 - `Standard Audit`: prioritize `layout`, `components-states`, and `responsive` by default. If the page includes forms, filters, uploads, or bulk actions, also read `forms-controls`; if the risk is visual collage, token drift, or theme preservation, also read `visual-system`.
-- `Focused Audit`: read Standard modules by default, then add `forms-controls`, `visual-system`, `accessibility`, or `ai-template-smell` when page risk calls for them. Do not read unrelated modules for completeness; prioritize modules that affect the core task, responsive stability, control consistency, and visual maturity.
-- `Deep Audit`: read all relevant modules based on page type and risk, including `accessibility` and `ai-template-smell` when applicable. Still report only issues with evidence, impact, and a worthwhile fix; do not output module items as a checklist.
+- `Focused Audit`: read Standard modules by default, then add `forms-controls`, `visual-system`, `design-contract`, `accessibility`, or `ai-template-smell` when page risk calls for them. Read `design-contract` only when the project has a contract, the user requests design-system inspection, or systemic token / recipe drift is present. Do not read unrelated modules for completeness.
+- `Deep Audit`: read all relevant modules based on page type and risk, including `design-contract`, `accessibility`, and `ai-template-smell` when applicable. Do not load `design-contract` merely because the mode is Deep when no contract signal exists.
 
 Module triggers:
 
@@ -96,6 +96,7 @@ Module triggers:
 - `375px`, `768px`, `1280px`, intermediate breakpoint, horizontal scroll, fixed width, or sticky/fixed overlap issues: read `modules/responsive.md`.
 - Forms, search/filter UI, selection controls, uploads, bulk actions, error recovery, or mixed native controls: read `modules/forms-controls.md`.
 - Type hierarchy, color roles, spacing, radius, border, shadow, decorative language, or theme-preservation issues: read `modules/visual-system.md`.
+- Project `design.md` / `designContract`, a design-system inspection request, or systemic shared-token, recipe, typography-role, variant / size / state drift: read `modules/design-contract.md`.
 - Keyboard path, focus-visible, accessible name, semantic structure, target size, or high-contrast issues: read `modules/accessibility.md`.
 - AI-template smell, vague slogans, fabricated data, excessive badges/bento/gradients, or section collage: read `modules/ai-template-smell.md`.
 
@@ -115,6 +116,7 @@ Do not mechanically output every category. Report only issues with evidence, imp
 
 - Prefer browser inspection for real layout, scrolling, click, focus, dialogs, dropdowns, inputs, and responsive behavior.
 - Record actual viewport, page region, scroll position, interaction state, and visible symptom.
+- Judge breathing room, local density, and visual weight from actual rendering first. Use source gap, padding, margin, and token values to locate causes, not as standalone proof that a compact or spacious layout is defective.
 - For runnable pages, verify what source alone cannot prove: media cropping, overlay layering, scroll snap, anchor jumps, form states, and mobile touch behavior.
 - For runnable pages, run a pointer / hover smoke check: primary buttons, search buttons, links, chips, card actions, icon buttons, and custom clickable regions should show correct click affordance and state feedback on hover.
 - Do not make final claims from source alone when the page is runnable.
@@ -188,6 +190,8 @@ Manage server lifecycle when starting or reusing a service:
 
 `Standard Audit` may add 768px tablet when the page type suggests breakpoint risk, such as sidebars, tables, or multi-column layouts, but it is not a mandatory matrix.
 
+At core viewports, `Standard Audit` should sample at least 1 core functional module per main page, such as navigation, filters, forms, cards, table toolbars, or CTAs. Enter the component internals instead of judging only the module boundary.
+
 `Focused Audit` default checks:
 
 - 375px mobile
@@ -199,14 +203,24 @@ Manage server lifecycle when starting or reusing a service:
 - Wide-desktop composition, large-screen whitespace, or container constraint risk: 1440px or 1920px
 - Mobile clipping, horizontal scroll, or density risk already found: 360px or 390px
 
+At core viewports, `Focused Audit` checks every major functional module and samples at least one representative repeated card, form item, action group, or toolbar. Merge shared-root findings, but retain representative locations.
+
 If time or environment allows only partial viewport coverage, check at least the 1 viewport most likely to show the issue, then state what was not verified.
 
-For `Standard Audit`, `Focused Audit`, and `Deep Audit`, browser checks should also scan first-viewport layout relationships:
+For `Standard Audit`, `Focused Audit`, and `Deep Audit`, browser checks first scan first-viewport layout relationships:
 
 - Whether hero columns, search areas, primary visual containers, and the next section overlap, disconnect, misalign, or feel hollow.
 - Whether mockups, illustrations, screenshots, charts, or decorative containers occupy too much space for too little content and unbalance the first viewport.
 - Whether search bars, CTAs, chip groups, and card groups have natural spacing, alignment, and hierarchy with neighboring sections.
 - Whether clickable elements expose cursor, hover, active, and focus-visible affordance.
+
+Then scan spatial relationships by mode:
+
+1. Page level: whether first viewport, sections, main content areas, and action paths feel cramped, disconnected, hollow, or incorrectly prioritized.
+2. Module level: whether navigation, filters, forms, cards, tables, toolbars, overlays, and CTAs have workable padding, grouping, density, and action areas.
+3. Component internal: whether icon/text, heading/supporting copy, label/control/help or error text, action groups, and status labels feel crowded, glued together, or separated by excessive gaps.
+
+Do not interpret the three levels as exhaustive DOM-node inspection. Standard samples core modules, Focused covers major modules and representative repeated components, and Deep systematically covers all three relationships.
 
 For Deep Audit, add:
 
@@ -222,6 +236,7 @@ For Deep Audit, also check when possible:
 - Scrolling: anchor jumps under sticky headers, scroll-margin / scroll-padding, scroll snap, and layout shifts when scrollbars appear.
 - Data content: tables, code blocks, rich text, long lists, and multi-column content across mobile, tablet, and wide screens.
 - States and accessibility: focus-visible, keyboard paths, forced colors / high-contrast risk, and reduced motion.
+- Local completion: sample representative forms, filters/toolbars, cards, or dense data regions and verify that internal spacing, line-height, state copy, and hit targets are not hidden by page-level conclusions.
 
 If audit opens a browser and saves screenshots, prefer saving them under `examples/reports/assets/audit/` in the current project, with one subdirectory per audit run, for example `examples/reports/assets/audit/2026-05-24-home/`. Filenames should include page or region, viewport, and state, such as `home-375.png` or `dashboard-1280-filter-open.png`. If the project is not writable, the user requested another directory, or screenshots are only available as temporary tool artifacts, state the screenshot location or why they were not saved in the report.
 
@@ -233,9 +248,9 @@ If the page cannot run, infer from CSS, layout code, breakpoints, and component 
 
 Capture evidence according to inspection method:
 
-- Browser evidence: viewport width, page region, interaction state, scroll position, visible symptom.
+- Browser evidence: viewport width, page region, interaction state, scroll position, exact element relationship, and visible symptom. Spatial findings should identify page, module, or component-internal level.
 - Server evidence: if this audit started or reused a dev / preview / static server, state the URL / port, service ownership, whether the temporary service was shut down, and whether any port or process residue remains.
-- Code evidence: file path, component name, CSS class, breakpoint, state branch, style token, component prop, semantic structure.
+- Code evidence: file path, component name, CSS class, breakpoint, state branch, style token, component prop, semantic structure. Spacing values usually explain a visible issue; they do not prove "too cramped" or "too empty" without rendered evidence.
 - Screenshot evidence: visible region, element relationship, clipping, overlap, hierarchy.
 - Screenshot files: when this audit saves screenshots, list the screenshot directory and key files in the report; if screenshots were only used as temporary observation artifacts, state that too.
 - Temporary files: if this audit creates temporary scripts, temporary pages, temporary data, or one-off downloads, delete them before the report by default; list them under `Artifacts` only when they are retained as evidence.
@@ -254,7 +269,7 @@ Check in this order:
 4. Components and states: cursor, hover, active, focus-visible, disabled, loading, empty, error, success.
 5. Form/control consistency: inputs, selects, dropdowns, multiselects, menus, and bulk actions should follow the project control system.
 6. Data and rich content: tables, charts, code blocks, rich text, long lists, numeric typography, and density.
-7. Visual system: spacing, typography, color, radius, border, shadow, background, filter, outline.
+7. Visual system: inspect spacing, typography, color, radius, border, shadow, background, filter, and outline at page, module, and component-internal levels so global token checks do not hide core-module detail.
 8. Interaction layers and motion: dropdowns, popovers, modals, toasts, drawers, scroll behavior, motion, reduced motion.
 9. Content stress: long text, mixed languages, varied counts, varied image ratios, multi-column/print/page-break cases.
 10. Accessibility baseline: keyboard paths, accessible names, semantic structure, forced colors, high contrast.
@@ -290,9 +305,9 @@ Use the report structure and omission rules from `references/checklists/ui-audit
 
 - If you find a blocking Critical issue, stop digging for Minor polish and report risk plus fix order.
 - In Quick Audit, stop after finding a Critical issue or 5 to 8 obvious Major issues, then give fix order.
-- In Standard Audit, stop when Top Findings cover the meaningful risks; do not continue into low-value polish or deep details.
-- In Focused Audit, expand systemic issues and risk viewports first; if Top Findings already explain the main risks, do not chase low-value Minor polish or full scoring.
-- In Deep Audit, prioritize systemic issues over scattered details; merge similar Minor issues instead of piling them up.
+- In Standard Audit, even when Top Findings cover the meaningful risks, complete the internal-spacing sample for core functional modules before stopping; then skip low-value polish.
+- In Focused Audit, expand systemic issues and risk viewports first, but cover every major functional module before stopping. Merge repeated local issues while retaining representative locations; do not chase low-value Minor polish or full scoring.
+- In Deep Audit, prioritize systemic issues, but do not use systemic conclusions as a substitute for three-level scanning. Merge similar Minor issues instead of piling them up. When multiple local Minor issues collectively create clear crowding, scanning difficulty, or operation pressure, evaluate them as one systemic Major.
 - If evidence is insufficient, stop inferring and mark it as `Open Questions` or needs verification.
 
 ## 13. Prohibited

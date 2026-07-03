@@ -61,6 +61,10 @@ For a new project with no visual system, use the reference image's structure and
 
 Use presets only when the user explicitly chooses one. When no preset is specified, choose direction from page type and project context. If an existing project has a clear system, a preset is only reference material and must not override it. Do not default to `cinematic-minimal`, and do not force dark, cinematic, minimal, or SaaS styling for "premium" feel. Presets are not product-fact sources.
 
+### Design Contract Routing
+
+Read `references/checklists/modules/design-contract.md` when the project has `design.md`, design-token files, `designContract.source`, the user asks to follow a design system, or the build affects shared components / cross-page visual systems. Reuse existing tokens and component recipes first. Keep using current implementation for undeclared domains instead of inventing rules. External Design Contracts remain references unless the user explicitly adopts them.
+
 ## 5. Information Structure
 
 Plan structure before styling. Do not start from backgrounds, gradients, cards, or motion.
@@ -95,7 +99,7 @@ Cover relevant states for buttons, forms, lists/data, dialogs/menus, and navigat
 
 Consider at least 375px, 768px, and 1280px. Avoid horizontal scrolling, edge-touching text, small buttons, overflowing copy, overflowing media/tables/code blocks, sticky/fixed overlap, and desktop layouts merely shrinking on mobile. Use `max-width`, `min-width: 0`, `aspect-ratio`, wrapping, and sensible breakpoints for fixed-format elements.
 
-Control page density and breathing room: section spacing, container width, line length, card density, and CTA weight should help scanning instead of crowding equal-weight elements into one viewport. Dashboard / Admin pages may be denser, but still need clear grouping; Landing / Portfolio / Content pages need stronger vertical rhythm.
+Control page density and breathing room through three levels: element spacing keeps icon/text, heading/copy, and label/control relationships intact; group spacing separates card contents, form groups, filters, and action groups; section spacing creates page-level pauses. Usually keep within-group spacing smaller than between-group spacing, and between-group spacing smaller than section spacing, while letting content relationships and page type override mechanical values. Dashboard / Admin pages may be denser, but still need clear grouping; Landing / Portfolio / Content pages need stronger vertical rhythm. Do not uniformly enlarge gaps to create breathing room or uniformly compress spacing to create neatness.
 
 Build for realistic content variation: longer titles, longer button copy, mixed language, varied image ratios, uneven card content, lists of 0/1/3/10/20 items, longer errors, and very long names, emails, project names, or filenames. Do not build layouts that only fit ideal short copy.
 
@@ -107,7 +111,7 @@ After building, self-check and fix obvious issues:
 
 1. Critical issues: unreadable, unclickable, overflow, overlap, broken nav/form/dialog.
 2. Fit with the existing visual system, reference role, or selected preset.
-3. Section rhythm, spacing, typography, color, radius, border, shadow, and component states.
+3. Element/group/section spatial hierarchy, section rhythm, typography, color, radius, border, shadow, and component states; confirm whitespace expresses grouping instead of hiding missing content or oversized containers.
 4. Mobile, long content, and realistic content pressure.
 5. Obvious AI-template smell or invented facts.
 

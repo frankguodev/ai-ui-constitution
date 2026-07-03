@@ -35,6 +35,8 @@ Preserve product meaning, business logic, information structure, main content or
 
 Converge with existing tokens; do not create a second color, radius, shadow, or spacing system for polish. Prefer local fixes over component refactors, remove noise instead of adding decoration, and unify component states instead of adding new visual effects.
 
+Read `references/checklists/modules/design-contract.md` only when polish needs systemic convergence of tokens, typography roles, component recipes, variant / size / state, motion, or elevation and the project has `design.md` / `designContract`. Use the contract to converge current implementation, not create a second system. If the contract conflicts with stable code and freshness is unclear, put it under `Remaining Questions` instead of rewriting broad surfaces.
+
 Polish does not add page-level information modules, data overviews, leaderboards, maps, recommendation areas, or content collections by default; stop and state that the work is beyond polish when those are needed. Lightly adjust vague, repeated, or visibly templated copy only when product meaning stays intact; put risky content changes under `Open Questions`.
 
 ## 4. Execution Depth
@@ -56,7 +58,7 @@ Externally expose only `polish`. Do not ask the user to choose Light / Standard 
 
 ## 6. Strategies
 
-- Spacing: normalize page container, section spacing, grouping, and component padding first; check both "too cramped" and "too empty" so breathing room does not disconnect related modules, push core first-screen content down, or reduce list scanning efficiency. Reduce mobile spacing without edge crowding or directly compressing desktop density onto small screens.
+- Spacing: identify element-level, group-level, and section-level relationships before normalizing page containers, section spacing, grouping, and component padding. Usually keep within-group spacing smaller than between-group spacing, and between-group spacing smaller than section spacing, while letting content relationships and page type override mechanical values. Distinguish effective whitespace, ineffective whitespace, and content hollowness: effective whitespace strengthens grouping, hierarchy, or action paths; ineffective whitespace creates hollowness, sinking, or broken scan paths; when container area clearly exceeds information value, repair section purpose, content structure, or composition before changing spacing. Mobile may use different tokens, but should preserve the spatial hierarchy instead of uniformly compressing desktop density.
 - Composition: choose the composition goal from the page type. Search, glossary, and resource-index pages with a large search field usually need a centered first-screen axis where title, supporting copy, search field, popular chips, and following content container share a clear alignment logic; centering is not mechanical, so also check visual weight, width, whitespace, and next-section visibility. Admin, dashboard, and dense list pages can keep a left axis, but need enough content density and clear grouping to support it.
 - Content Structure: check whether sections repeat the same role, same card grid, or cards whose area exceeds their information. Same-type content should have one primary expression; repeated appearances must carry different roles, weight, or form, otherwise merge, weaken, or delete first. Directory / search / glossary / resource-index pages should not default short entries to large-padding, tall cards; when a card only has a title, one-line description, and one status, use compact lists, small entry cards, grouped entries, trending lists, or lower visual weight. Without changing product facts, repeated modules may be reorganized into category entries, trending lists, scenario entries, compact update lists, complete lists, or methodology notes so the page forms a product path instead of a card pile.
 - Typography: reduce levels, control type/weight jumps, improve line-height, paragraph width, and heading wraps.
@@ -76,6 +78,7 @@ After polishing, check:
 - Icon/text alignment, icon stroke and size, icon-button hit targets, and whether dialogs, menus, forms, and navigation still work.
 - Visual tokens are more unified and no new inconsistency was introduced.
 - The page is easier to scan, sections pause without feeling hollow, and the main CTA is not buried by equal-weight elements.
+- Element, group, and section spacing still form a clear hierarchy; large gaps do not disconnect related content, and uniform small gaps do not glue unrelated content together.
 - First-screen title, supporting copy, search area, chip group, card group, or next section stay within one composition logic; for search / list information pages, especially check the center axis, container width, and first-screen content visibility.
 - Each section answers one clear question, serves one clear entry, or supports one decision; two sections should not use the same form to answer the same entry question.
 - Original page style and product meaning are preserved, and existing lists, stats, categories, tags, or CTAs were not copied into a new decorative or summary area.

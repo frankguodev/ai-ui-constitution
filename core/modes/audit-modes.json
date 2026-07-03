@@ -15,6 +15,7 @@
       "criticalUsability": true,
       "responsiveSmoke": true,
       "firstViewportLayout": "smoke",
+      "spatialGranularity": "page-smoke",
       "pointerHoverSmoke": "core-clickables",
       "componentStates": "core-only"
     },
@@ -41,9 +42,10 @@
       "criticalUsability": true,
       "responsiveSmoke": true,
       "firstViewportLayout": true,
+      "spatialGranularity": "page-plus-core-module-sample",
       "pointerHoverSmoke": true,
       "componentStates": "core-and-visible",
-      "visualSystem": "systemic-only"
+      "visualSystem": "systemic-and-core-module-sample"
     },
     "output": {
       "topFindings": true,
@@ -69,9 +71,10 @@
       "criticalUsability": true,
       "responsiveSmoke": true,
       "firstViewportLayout": true,
+      "spatialGranularity": "page-and-major-modules",
       "pointerHoverSmoke": true,
       "componentStates": "core-and-risky",
-      "visualSystem": "systemic-and-visible",
+      "visualSystem": "systemic-and-module-detail",
       "mediaRichContent": "when-present",
       "scrollBehavior": "when-risky",
       "nativeControls": true,
@@ -101,9 +104,10 @@
       "criticalUsability": true,
       "responsiveSmoke": true,
       "firstViewportLayout": true,
+      "spatialGranularity": "page-module-component-full",
       "pointerHoverSmoke": true,
       "componentStates": "full",
-      "visualSystem": "full",
+      "visualSystem": "full-three-level",
       "mediaRichContent": true,
       "scrollBehavior": true,
       "nativeControls": true,

@@ -4,6 +4,52 @@
 
 ---
 
+## v0.1.27 - 2026-06-24
+
+### Design Contract
+
+- 新增按需读取的双语 `design-contract` 模块，用于识别项目设计事实、项目契约、扩展配置和外部参考的来源与优先级。
+- 引入 semantic token、state ladder、typography role、component recipe、motion / elevation 和 content voice 基线，但不内置 Geist 或其他外部设计系统的具体视觉值。
+- 增加 `reference`、`prefer`、`enforce` 三档 strictness，并明确缺失字段不得补造、外部参考不会自动升级为项目规则。
+
+### Workflow Integration
+
+- `audit-ui` 和主 checklist 增加 Design Contract 模块路由，仅在存在契约、用户要求设计系统检查或出现系统性 token / recipe 漂移时读取。
+- `build-ui`、`review-ui`、`polish-ui` 和 `fix-ui` 增加短路由，保持普通任务读取成本不变，并防止契约修复扩大成 redesign。
+- 明确 Design Contract 负责项目标准，`visual-system` 继续负责用户可见一致性，状态和可访问性仍由原模块判断。
+
+### Audit Granularity
+
+- 将 Audit 的空间检查从首屏和系统性 token 扫描扩展为页面级、模块级、组件内部三级关系，并按 Quick / Standard / Focused / Deep 控制执行成本。
+- Standard 对每个主要页面至少抽查一个核心功能模块；Focused 覆盖所有主要模块并抽查重复组件；Deep 在核心视口系统完成三级扫描。
+- 强化浏览器证据要求：呼吸感和局部密度以实际渲染为主，代码 spacing 数值只用于解释根因，不能单独证明“太挤”或“太空”。
+- 调整停止条件，避免 Top Findings 或系统性结论过早截断核心模块细节；多个局部 Minor 共同造成明显压迫时可合并评估为系统性 Major。
+
+### Configuration
+
+- 扩展项目配置示例，支持 `source`、`strictness` 及 colors、typography、spacing、shape、components、motion、content 可选域。
+- 更新 `EXTEND.md`、配置文档和双语 README，说明契约路径、兼容旧 `visualTokens` 的方式以及外部参考边界。
+- 将配置文档和项目配置示例纳入 npm 发布包，确保安装后的 Design Contract 能力有可访问的配置说明。
+
+### Validation
+
+- 校验脚本增加 Design Contract 双语模块、checklist 路由、配置对象、source、strictness 和可选域类型检查。
+- 保留旧配置兼容，不引入复杂 JSON Schema 或新的运行时依赖。
+
+## v0.1.26 - 2026-06-24
+
+### Visual System
+
+- 将页面呼吸感收敛为元素级、分组级、区块级三层空间关系模型，要求先判断内容关系，再应用具体 spacing token。
+- 增加有效留白、无效留白和内容空洞的区分，避免只靠放大或压缩间距掩盖构图、模块职责或信息量问题。
+- 补充“组内 < 组间 < section”的默认疏密关系，同时明确它是判断框架，不是机械的固定数值规则。
+
+### Build / Polish
+
+- `build-ui` 增加三层空间关系的生成与自检要求，避免统一放大 gap 制造呼吸感，或统一压缩间距制造表面整齐。
+- `polish-ui` 调整 spacing 执行顺序：先识别内容分组、模块职责和构图，再统一容器、padding、gap 与 section spacing。
+- `layout` 和 `responsive` 分别补充留白职责、内容空洞归因和断点后的空间层级保持规则。
+
 ## v0.1.25 - 2026-05-27
 
 ### Build

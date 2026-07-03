@@ -2,6 +2,23 @@
   "defaultPreset": "cinematic-minimal",
   "defaultViewports": [375, 768, 1280],
   "auditStrictness": "normal",
+  "designContract": {
+    "source": "../design.md",
+    "strictness": "prefer",
+    "colors": {
+      "roles": ["surface", "text", "border", "accent", "success", "warning", "error", "focus"]
+    },
+    "typography": {
+      "roles": ["heading", "copy", "label", "action", "code-data"]
+    },
+    "spacing": {
+      "principle": "preserve element, group, and section hierarchy"
+    },
+    "shape": {},
+    "components": {},
+    "motion": {},
+    "content": {}
+  },
   "visualTokens": {
     "radius": {
       "card": "8px",
@@ -17,4 +34,3 @@
     ]
   }
 }
-

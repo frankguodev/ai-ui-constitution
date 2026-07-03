@@ -44,6 +44,8 @@ Review 默认不做评分、不做完整视口矩阵、不做完整 Content Stre
 
 如果范围像整页或整站体检，先判断是否应该改用 `audit-ui`。不要为了方便把一个 Audit 请求压成 Review。
 
+如果当前改动涉及 design token、共享组件、theme、typography scale、variant / size / state、motion 或 elevation，并且项目存在 `design.md` 或 `designContract`，读取 `references/checklists/modules/design-contract.zh.md`。Review 只判断本次改动是否偏离适用契约，不扩大成整站设计系统审查；没有契约信号时不读取。
+
 ## 3. Review 模式
 
 ### Quick Review / 快速审查

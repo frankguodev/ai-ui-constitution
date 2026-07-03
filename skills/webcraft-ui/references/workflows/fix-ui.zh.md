@@ -40,6 +40,8 @@
 
 如果要从根本上改整体风格方向，必须先放入 `Open Questions` 让用户确认。
 
+普通局部修复不读取 Design Contract。只有 finding 明确来自契约偏离，或修复涉及共享 token、component recipe、typography role、variant / size / state、motion / elevation 时，才读取 `references/checklists/modules/design-contract.zh.md`。修复后复检对应契约项；不要借契约修复扩大成 redesign。契约疑似过时或与稳定实现大范围冲突时，停止扩张并列入 `Open Questions`。
+
 ## 3. 根据修复来源选择策略
 
 - `audit`：按 Critical / Major / Minor 和 Fix Order 修；如果来源是 `Focused Audit`，优先修 Top Findings、系统性 Major 和风险视口问题，不扩展成 Deep 级别重构。
